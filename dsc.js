@@ -5,7 +5,7 @@ const settings = new Map()
 var node = document.createElement('p');
 
 var powerIO =       { on: 'true', listener: [node], className: [''], name: 'Power', innerHTML: '' }
-var shortsIO =      { on: 'true', listener: [node], className: ['style-scope ytd-rich-section-renderer'], name: 'Shorts', innerHTML: 'Shorts', deleteFunction: waitForInnerHTML }
+var shortsIO =      { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-section-renderer','style-scope ytd-reel-shelf-renderer'], name: 'Shorts', innerHTML: 'Shorts', deleteFunction: waitForInnerHTML }
 var communityIO =   { on: 'true', listener: [node], className: ['style-scope ytd-rich-section-renderer'], name: 'Community', innerHTML: 'Latest YouTube posts', deleteFunction: waitForInnerHTML }
 var breakingNewsIO ={ on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], name: 'Breaking News', innerHTML: 'Breaking news', deleteFunction: waitForInnerHTML }
 var sidebarIO =     { on: 'true', listener: [node,node], className: ['[aria-label="Shorts"]','[title="Shorts"]'], name: 'Sidebar', innerHTML: '', deleteFunction: waitForQuery }
@@ -56,7 +56,7 @@ function removeByInnerHTML(IO,className){
         for(let gchild = 0; gchild < div.length; gchild++){
             if(div[gchild].innerHTML == IO.innerHTML){
                 console.log("Removing " + classElement[child].className)
-                classElement[child].remove(div)
+                classElement[child].parentNode.remove()
                 child--
                 break; // break outer if only one section available per webpage
             }
