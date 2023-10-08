@@ -25,7 +25,7 @@
         "128": "./dsc128.png"
     },
 
-    "permissions": ["tabs", "storage"],
+    "permissions": ["activeTab", "storage"],
     
     "content_scripts": [
         {

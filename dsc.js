@@ -180,8 +180,7 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
         await resetValues();
         if(newValue == true){
             if(key == "Power"){ deleteIO() }
-
-            if(settings.get("powerIO").on == true){
+            else if(settings.get("powerIO").on == true){
                 for (const [key2, value] of settings.entries()) {
                     if(value.name == key){ value.deleteFunction(value) }
                 }
