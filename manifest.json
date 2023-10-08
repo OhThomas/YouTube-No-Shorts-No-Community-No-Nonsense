@@ -1,0 +1,37 @@
+{
+    "manifest_version": 3,
+    "name": "YouTube: No Shorts, No Community, No Nonsense",
+    "description": "Disables the shorts and community sections for a more enjoyable experience.",
+    "version": "0.6",
+    "author": "Oh Thomas",
+
+    "action": {
+        "default_popup": "./dsc.html",
+        "default_icon": {
+            "16": "./dsc16.png",
+            "32": "./dsc32.png",
+            "48": "./dsc48.png",
+            "64": "./dsc.png",
+            "96": "./dsc96.png",
+            "128": "./dsc128.png"
+        }
+    },
+
+    "icons": {
+        "16": "./dsc16.png",
+        "32": "./dsc32.png",
+        "64": "./dsc.png",
+        "96": "./dsc96.png",
+        "128": "./dsc128.png"
+    },
+
+    "permissions": ["tabs", "storage"],
+    
+    "content_scripts": [
+        {
+            "matches": ["*://*.youtube.com/*"],
+            "run_at": "document_start",
+            "js": ["./dsc.js"]
+        }
+    ]
+}
