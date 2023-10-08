@@ -2,13 +2,14 @@ var window = window ?? self;
 let removeShortSidebar = '[aria-label="Shorts"]';
 let removeShortSidebarExtended = '[title="Shorts"]';
 const settings = new Map()
+var node = document.createElement('p');
 
-var powerIO =       { on: 'true', listener: '', className: '', name: 'Power', innerHTML: '' }
-var shortsIO =      { on: 'true', listener: '', className: 'style-scope ytd-rich-section-renderer', name: 'Shorts', innerHTML: 'Shorts', deleteFunction: deleteSection }
-var communityIO =   { on: 'true', listener: '', className: 'style-scope ytd-rich-section-renderer', name: 'Community', innerHTML: 'Latest YouTube posts', deleteFunction: deleteSection }
-var breakingNewsIO ={ on: 'true', listener: '', className: 'style-scope ytd-rich-shelf-renderer', name: 'Breaking News', innerHTML: 'Breaking news', deleteFunction: deleteSection }
-var sidebarIO =     { on: 'true', listener: '', listener2: '', className: '', name: 'Sidebar', innerHTML: '', ariaLabel: '[aria-label="Shorts"]', title: '[title="Shorts"]', deleteFunction: deleteSidebar }
-var headerIO =      { on: 'true', listener: '', className: 'style-scope ytd-rich-grid-renderer', name: 'Header', innerHTML: '', id: 'header', deleteFunction: deleteHeader }
+var powerIO =       { on: 'true', listener: [node], className: [''], name: 'Power', innerHTML: '' }
+var shortsIO =      { on: 'true', listener: [node], className: ['style-scope ytd-rich-section-renderer'], name: 'Shorts', innerHTML: 'Shorts', deleteFunction: waitForInnerHTML }
+var communityIO =   { on: 'true', listener: [node], className: ['style-scope ytd-rich-section-renderer'], name: 'Community', innerHTML: 'Latest YouTube posts', deleteFunction: waitForInnerHTML }
+var breakingNewsIO ={ on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], name: 'Breaking News', innerHTML: 'Breaking news', deleteFunction: waitForInnerHTML }
+var sidebarIO =     { on: 'true', listener: [node,node], className: ['[aria-label="Shorts"]','[title="Shorts"]'], name: 'Sidebar', innerHTML: '', deleteFunction: waitForQuery }
+var headerIO =      { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], name: 'Header', innerHTML: '', id: 'header', deleteFunction: waitForMultiMut }
 
 settings.set("powerIO",powerIO)
 settings.set("shortsIO",shortsIO)
@@ -38,8 +39,8 @@ function removeByQuery(query){
     return false;
 }
 
-function removeHeader(IO){
-    const elements = document.getElementsByClassName(IO.className);
+function removeHeader(IO,className){
+    const elements = document.getElementsByClassName(className);
     for(let element= 0; element < elements.length; element++){
         if(elements[element].id == IO.id){
             console.log("Removing " + elements[element].parentNode.className)
@@ -48,8 +49,8 @@ function removeHeader(IO){
     }
 }
 
-function removeByInnerHTML(IO){
-    let classElement = document.getElementsByClassName(IO.className)
+function removeByInnerHTML(IO,className){
+    let classElement = document.getElementsByClassName(className)
     for(let child = 0; child < classElement.length; child++){
         let div = classElement[child].getElementsByTagName("span")
         for(let gchild = 0; gchild < div.length; gchild++){
@@ -88,71 +89,44 @@ async function waitForDocument(){
 }
 
 function waitForMultiMut(IO) {
-    preDisconnect(IO.listener)
-    IO.listener = new MutationObserver(mutations => {
-        if(checkToDisconnect(IO.listener,IO.on)) { return; }
+    for(let i = 0; i < IO.listener.length; i++){
+        removeHeader(IO,IO.className[i])
+        preDisconnect(IO.listener[i])
+        IO.listener[i] = new MutationObserver(mutations => {
+            if(checkToDisconnect(IO.listener[i],IO.on)) { return; }
 
-        for(mut in mutations){
-            if(mutations[mut].target.className == IO.className){
-                removeHeader(settings.get("headerIO"))
-                // We can disconnect as it only loads once but will keep running to future proof
+            for(mut in mutations){
+                if(mutations[mut].target.className == IO.className[i]){
+                    removeHeader(IO,IO.className[i])
+                    // We can disconnect as it only loads once but will keep running to future proof
+                }
             }
-        }
-    });
-    IO.listener.observe(document.body, { childList: true, subtree: true });
+        });
+        IO.listener[i].observe(document.body, { childList: true, subtree: true });
+    }
 }
 
-function waitForQuery(IO, selector) {
-    if(selector == IO.title){
-        preDisconnect(IO.listener2)
-        IO.listener2 = new MutationObserver(function() {
-            if(checkToDisconnect(IO.listener2, IO.on)) { return; }
-            if(removeByQuery(selector)){ }//IO.listener2.disconnect(); }
+function waitForQuery(IO) {
+    for(let i = 0; i < IO.listener.length; i++){
+        removeByQuery(IO.className[i])
+        preDisconnect(IO.listener[i])
+        IO.listener[i] = new MutationObserver(function() {
+            if(checkToDisconnect(IO.listener[i], IO.on)) { return; }
+            if(removeByQuery(IO.className[i])){ }//IO.listener2.disconnect(); }
         });
-        IO.listener2.observe(document.body, { childList: true, subtree: true });
-    }
-    else{
-        preDisconnect(IO.listener)
-        IO.listener = new MutationObserver(function() {
-            if(checkToDisconnect(IO.listener, IO.on)) { return; }
-            if(removeByQuery(selector)){ IO.listener.disconnect(); }
-        });
-        IO.listener.observe(document.body, { childList: true, subtree: true });
+        IO.listener[i].observe(document.body, { childList: true, subtree: true });
     }
 }
 
 function waitForInnerHTML(IO) {
-    preDisconnect(IO.listener)
-    IO.listener = new MutationObserver(function() {
-        if(checkToDisconnect(IO.listener,IO.on)) { return; }
-        removeByInnerHTML(IO)
-    });
-    IO.listener.observe(document.body, { childList: true, subtree: true });
-}
-
-function deleteSection(IO){
-    removeByInnerHTML(IO)
-    waitForInnerHTML(IO)
-}
-
-function deleteQuery(query){
-    removeByQuery(query)
-    waitForQuery(settings.get("sidebarIO"),query)
-}
-
-function deleteSidebar(){
-    deleteQuery(settings.get("sidebarIO").title)
-    deleteQuery(settings.get("sidebarIO").ariaLabel)
-}
-
-function deleteHeader(){
-    removeHeader(settings.get("headerIO"))
-    waitForMultiMut(settings.get("headerIO"))
-}
-
-async function resetValues(){
-    for (const [key, value] of settings.entries()) {
-        value.on = (await getStorage(value.name) != null) ? await getStorage(value.name) : true
+    for(let i = 0; i < IO.listener.length; i++){
+        removeByInnerHTML(IO,IO.className[i])
+        preDisconnect(IO.listener[i])
+        IO.listener[i] = new MutationObserver(function() {
+            if(checkToDisconnect(IO.listener[i],IO.on)) { return; }
+            removeByInnerHTML(IO,IO.className[i])
+        });
+        IO.listener[i].observe(document.body, { childList: true, subtree: true });
     }
 }
 
@@ -161,6 +135,12 @@ function deleteIO(){
         if(value.name != "Power"){
             if(value.on == true){ value.deleteFunction(value) }
         }
+    }
+}
+
+async function resetValues(){
+    for (const [key, value] of settings.entries()) {
+        value.on = (await getStorage(value.name) != null) ? await getStorage(value.name) : true
     }
 }
 
