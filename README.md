@@ -6,4 +6,4 @@ Chrome extension that lets the user block different sections from YouTube like t
 
 &nbsp;
 
-Download available ![here](https://chrome.google.com/webstore/detail/youtube-no-shorts-no-comm/ailbpknjjkdokgecbhhdcmgponjnkaon)
+Download available [here](https://chrome.google.com/webstore/detail/youtube-no-shorts-no-comm/ailbpknjjkdokgecbhhdcmgponjnkaon)
