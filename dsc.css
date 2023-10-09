@@ -1,8 +1,15 @@
 html, body {
     margin: 0;
     min-height: 100vh;
-    min-width: 100vw;
+    min-width: 100%;
+    width: 180px;
     display: inline-block;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+body::-webkit-scrollbar{
+    display:none;
 }
 
 #centerTitle{
@@ -207,20 +214,20 @@ input, ul.submenu {
     display: none;
     padding-left: 0;
     margin: 0;
-    width: 100vw;
+    width: 100%;
 }
 
 label {
     position: absolute;
     display: inline-block;
     cursor: pointer;
-    width: 100vw;
+    width: 100%;
 }
 
 .submenu{
     display: flex;
     float: right;
-    width: 100vw;
+    width: 100%;
 }
 
 input:checked~ul.submenu {
