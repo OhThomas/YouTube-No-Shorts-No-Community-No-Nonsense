@@ -1,18 +1,18 @@
 var window = window ?? self;
-let removeShortSidebar = '[aria-label="Shorts"]';
-let removeShortSidebarExtended = '[title="Shorts"]';
 const settings = new Map()
 var node = document.createElement('p');
 
 var powerIO =       { on: 'true', listener: [node], className: [''], name: 'Power', innerHTML: '' }
-var shortsIO =      { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-section-renderer','style-scope ytd-reel-shelf-renderer'], name: 'Shorts', innerHTML: 'Shorts', deleteFunction: waitForInnerHTML }
-var communityIO =   { on: 'true', listener: [node], className: ['style-scope ytd-rich-section-renderer'], name: 'Community', innerHTML: 'Latest YouTube posts', deleteFunction: waitForInnerHTML }
-var breakingNewsIO ={ on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], name: 'Breaking News', innerHTML: 'Breaking news', deleteFunction: waitForInnerHTML }
-var sidebarIO =     { on: 'true', listener: [node,node], className: ['[aria-label="Shorts"]','[title="Shorts"]'], name: 'Sidebar', innerHTML: '', deleteFunction: waitForQuery }
-var headerIO =      { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], name: 'Header', innerHTML: '', id: 'header', deleteFunction: waitForMultiMut }
+var shortsIO =      { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-section-renderer','style-scope ytd-reel-shelf-renderer'], higherClass: ['',''], name: 'Shorts', innerHTML: 'Shorts', waitFunction: waitForMut, deleteFunction: removeByInnerHTML }
+var shortsVideosIO ={ on: 'true', listener: [node], className: ['style-scope ytd-video-renderer'], higherClass: ['.style-scope.ytd-item-section-renderer'], name: 'Shorts Videos', innerHTML: '/shorts/', waitFunction: waitForMut, deleteFunction: removeByHREF }
+var communityIO =   { on: 'true', listener: [node], className: ['style-scope ytd-rich-section-renderer'], higherClass: [''], name: 'Community', innerHTML: 'Latest YouTube posts', waitFunction: waitForMut, deleteFunction: removeByInnerHTML }
+var breakingNewsIO ={ on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], higherClass: [''], name: 'Breaking News', innerHTML: 'Breaking news', waitFunction: waitForMut, deleteFunction: removeByInnerHTML }
+var sidebarIO =     { on: 'true', listener: [node,node], className: ['[aria-label="Shorts"]','[title="Shorts"]'], higherClass: ['',''], name: 'Sidebar', innerHTML: '', waitFunction: waitForMut, deleteFunction: removeByQuery }
+var headerIO =      { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], higherClass: ['',''], name: 'Header', innerHTML: '', id: 'header', waitFunction: waitForMultiMut, deleteFunction: removeHeader }
 
 settings.set("powerIO",powerIO)
 settings.set("shortsIO",shortsIO)
+settings.set("shortsVideosIO",shortsVideosIO)
 settings.set("communityIO",communityIO)
 settings.set("breakingNewsIO",breakingNewsIO)
 settings.set("sidebarIO",sidebarIO)
@@ -29,11 +29,11 @@ async function awaitStorage(IO){
     IO.on = (await getStorage(IO.name) != null) ? await getStorage(IO.name) : true
 }
 
-function removeByQuery(query){
-    let element = document.querySelector(query);
+function removeByQuery(IO,className){
+    let element = document.querySelector(className);
     if(element != null) { 
         element.remove()
-        console.log("Removing " + query)
+        console.log("Removing " + IO.name + " at " + className)
         return true 
     }
     return false;
@@ -43,8 +43,24 @@ function removeHeader(IO,className){
     const elements = document.getElementsByClassName(className);
     for(let element= 0; element < elements.length; element++){
         if(elements[element].id == IO.id){
-            console.log("Removing " + elements[element].parentNode.className)
+            console.log("Removing " + IO.name + " at " + elements[element].parentNode.className)
             elements[element].parentNode.removeChild(elements[element]);
+        }
+    }
+}
+
+function removeByHREF(IO, className, higherClass){
+    const elements = document.getElementsByClassName(className);
+    for(let element= 0; element < elements.length; element++){
+        if(elements[element].href && elements[element].href.match(IO.innerHTML)){
+            console.log("Removing "+ IO.name+" at "+ elements[element].parentNode.className)
+
+            // splitting url incase they shorten it without domain when we find higher class by href tag
+            let string = elements[element].href.split(IO.innerHTML)[1];
+            string = IO.innerHTML+string
+            let elem = document.querySelector('[href="'+string+'"]').closest(higherClass)
+            if(elem == null){ elem = document.querySelector('[href="'+elements[element].href+'"]').closest(higherClass)}
+            if(elem != null){ elem.remove() }
         }
     }
 }
@@ -54,8 +70,8 @@ function removeByInnerHTML(IO,className){
     for(let child = 0; child < classElement.length; child++){
         let div = classElement[child].getElementsByTagName("span")
         for(let gchild = 0; gchild < div.length; gchild++){
-            if(div[gchild].innerHTML == IO.innerHTML){
-                console.log("Removing " + classElement[child].className)
+            if(div[gchild].innerHTML.match(IO.innerHTML)){
+                console.log("Removing " + IO.name + " at " + classElement[child].className)
                 classElement[child].parentNode.remove()
                 child--
                 break; // break outer if only one section available per webpage
@@ -76,64 +92,44 @@ function checkToDisconnect(listener,on){
     return false;
 }
 
-async function waitForDocument(){
-    new Promise(resolve => {
-        var observer = new MutationObserver(function() {
-            if (document.body) {
-                observer.disconnect();
-                resolve()
-            }
-        });
-        observer.observe(document.documentElement, {childList: true});
-    });
-}
-
 function waitForMultiMut(IO) {
     for(let i = 0; i < IO.listener.length; i++){
-        removeHeader(IO,IO.className[i])
+        IO.deleteFunction(IO,IO.className[i])
         preDisconnect(IO.listener[i])
         IO.listener[i] = new MutationObserver(mutations => {
             if(checkToDisconnect(IO.listener[i],IO.on)) { return; }
 
             for(mut in mutations){
                 if(mutations[mut].target.className == IO.className[i]){
-                    removeHeader(IO,IO.className[i])
+                    IO.deleteFunction(IO,IO.className[i])
                     // We can disconnect as it only loads once but will keep running to future proof
                 }
             }
         });
-        IO.listener[i].observe(document.body, { childList: true, subtree: true });
+        try{
+            IO.listener[i].observe(document.body, { childList: true, subtree: true });
+        } catch { console.log("Body not loaded yet.") };
     }
 }
 
-function waitForQuery(IO) {
+function waitForMut(IO){
     for(let i = 0; i < IO.listener.length; i++){
-        removeByQuery(IO.className[i])
+        IO.deleteFunction(IO,IO.className[i],IO.higherClass[i])
         preDisconnect(IO.listener[i])
         IO.listener[i] = new MutationObserver(function() {
             if(checkToDisconnect(IO.listener[i], IO.on)) { return; }
-            if(removeByQuery(IO.className[i])){ }//IO.listener2.disconnect(); }
+            IO.deleteFunction(IO,IO.className[i],IO.higherClass[i])
         });
-        IO.listener[i].observe(document.body, { childList: true, subtree: true });
-    }
-}
-
-function waitForInnerHTML(IO) {
-    for(let i = 0; i < IO.listener.length; i++){
-        removeByInnerHTML(IO,IO.className[i])
-        preDisconnect(IO.listener[i])
-        IO.listener[i] = new MutationObserver(function() {
-            if(checkToDisconnect(IO.listener[i],IO.on)) { return; }
-            removeByInnerHTML(IO,IO.className[i])
-        });
-        IO.listener[i].observe(document.body, { childList: true, subtree: true });
+        try{
+            IO.listener[i].observe(document.body, { childList: true, subtree: true });
+        } catch { console.log("Body not loaded yet.") };
     }
 }
 
 function deleteIO(){
     for (const [key, value] of settings.entries()) {
         if(value.name != "Power"){
-            if(value.on == true){ value.deleteFunction(value) }
+            if(value.on == true){ value.waitFunction(value) }
         }
     }
 }
@@ -145,7 +141,6 @@ async function resetValues(){
 }
 
 async function startup(){
-    await waitForDocument()         // waiting for page to load
     for (const [key, value] of settings.entries()) {
         await awaitStorage(value)   // loading settings
     }
@@ -162,7 +157,7 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
             if(key == "Power"){ deleteIO() }
             else if(settings.get("powerIO").on == true){
                 for (const [key2, value] of settings.entries()) {
-                    if(value.name == key){ value.deleteFunction(value) }
+                    if(value.name == key){ value.waitFunction(value) }
                 }
             }
         }

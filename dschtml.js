@@ -4,6 +4,7 @@ const settings = new Map()
 
 var powerIO = { on: 'true', name: 'Power'}
 var shortsIO = { on: 'true', name: 'Shorts'}
+var shortsVideosIO = { on: 'true', name: 'Shorts Videos'}
 var communityIO = { on: 'true', name: 'Community'}
 var breakingNewsIO = { on: 'true', name: 'Breaking News'}
 var sidebarIO = { on: 'true', name: 'Sidebar'}
@@ -11,6 +12,7 @@ var headerIO = { on: 'true', name: 'Header'}
 
 settings.set("Power",powerIO)
 settings.set("Shorts",shortsIO)
+settings.set("Shorts Videos",shortsVideosIO)
 settings.set("Community",communityIO)
 settings.set("Breaking News",breakingNewsIO)
 settings.set("Sidebar",sidebarIO)
@@ -49,9 +51,9 @@ function textCheck(){
             }
         }
 
+        const tempText = document.getElementById("textBox")
+        const colorText = document.getElementById("kiFontColor")
         if(!tabs[0].url.includes("youtube.com") || settings.get("Power").on == false || noSettingsOn){
-            const tempText = document.getElementById("textBox")
-            const colorText = document.getElementById("kiFontColor")
             try{
                 tempText.classList.add('noAnimation')
                 colorText.classList.add('noAnimation')
@@ -69,8 +71,6 @@ function textCheck(){
             }
         }
         else{
-            const tempText = document.getElementById("textBox")
-            const colorText = document.getElementById("kiFontColor")
             try{
                 tempText.style.animation = "glowing 5000ms infinite"
                 colorText.style.animation = "colorChange 10000ms linear infinite"

@@ -1,12 +1,14 @@
 <html>
     <link rel='stylesheet' type='text/css' media='all' href='./dsc.css'/>
     <body>
-        <div id="kiFont">
-            <center>YouTube:</center>
-            <center>No</center>
-            <center>Shorts</center>
+        <div id="centerTitle">
+            <div id="kiFont">
+                <center>YouTube:</center>
+                <center>No</center>
+                <center>Shorts</center>
+            </div>
+            <center><img src="./dsc96.png"></center>
         </div>
-        <center><img src="./dsc96.png"></center>
         <br>
 
         <div class="settings">
@@ -16,26 +18,52 @@
         </div>
         <div class="switchContainerPower">
             <label class="switch">
-            <input type="checkbox" id="Power">
-            <span class="slider round"></span>
-            </label></div>
-            <br>
-            <br>
+                <input type="checkbox" id="Power">
+                <span class="slider round"></span>
+            </label>
         </div>
+        <br><br>
 
-        <div class="settings">
-            <div class="settingsText">
-                Shorts
+        <input id="shortsCheck" type="checkbox" name="menu" />
+        <label for="shortsCheck">Shorts</label>
+        <div class="downArrowContainer">&#9662;</div>
+        <div class="upArrowContainer">&#9652;</div>
+        <br>
+        
+        <ul class="submenu">
+            <pre></pre>
+            <hr style="display:flex; width: 100%;">
+            <div class="settings">
+                <div class="settingsText">
+                    Sections
+                </div>
             </div>
-        </div>
-        <div class="switchContainer">
-            <label class="switch">
-            <input type="checkbox" id="Shorts">
-            <span class="slider round"></span>
-            </label></div>
+            <div class="switchContainer">
+                <label class="switch">
+                    <input type="checkbox" id="Shorts">
+                    <span class="slider round"></span>
+                </label>
+            </div>
             <br>
+            <hr style="display:inline-block; width: 78%;">
             <br>
-        </div>
+
+            <div class="settings">
+                <div class="settingsText">
+                    Videos
+                </div>
+            </div>
+            <div class="switchContainer">
+                <label class="switch">
+                    <input type="checkbox" id="Shorts Videos">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <br>
+            <hr style="display:inline-block; width: 78%;"><!--margin-left:10%; margin-right: 10%;"> -->
+            <br>
+        </ul>
+        <br>
 
         <div class="settings">
             <div class="settingsText">
@@ -44,12 +72,11 @@
         </div>
         <div class="switchContainer">
             <label class="switch">
-            <input type="checkbox" id="Community">
-            <span class="slider round"></span>
-            </label></div>
-            <br>
-            <br>
+                <input type="checkbox" id="Community">
+                <span class="slider round"></span>
+            </label>
         </div>
+        <br><br>
 
         <div class="settings">
             <div class="settingsText">
@@ -58,12 +85,11 @@
         </div>
         <div class="switchContainer">
             <label class="switch">
-            <input type="checkbox" id="Breaking News">
-            <span class="slider round"></span>
-            </label></div>
-            <br>
-            <br>
+                <input type="checkbox" id="Breaking News">
+                <span class="slider round"></span>
+            </label>
         </div>
+        <br><br>
 
         <div class="settings">
             <div class="settingsText">
@@ -72,12 +98,11 @@
         </div>
         <div class="switchContainer">
             <label class="switch">
-            <input type="checkbox" id="Sidebar">
-            <span class="slider round"></span>
-            </label></div>
-            <br>
-            <br>
+                <input type="checkbox" id="Sidebar">
+                <span class="slider round"></span>
+            </label>
         </div>
+        <br><br>
 
         <div class="settings">
             <div class="settingsText">
@@ -86,15 +111,16 @@
         </div>
         <div class="switchContainer">
             <label class="switch">
-            <input type="checkbox" id="Header">
-            <span class="slider round"></span>
-            </label></div>
-            <br>
-            <br>
+                <input type="checkbox" id="Header">
+                <span class="slider round"></span>
+            </label>
         </div>
+        <br><br>
 
-        <div id="kiFontColor">
-            <center><div id="textBox"></div></center>
+        <div id="centerTitle">
+            <div id="kiFontColor">
+                <center><div id="textBox"></div></center>
+            </div>
         </div>
         <script src="./dschtml.js"></script>
     </body>

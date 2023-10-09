@@ -2,6 +2,13 @@ html, body {
     margin: 0;
     min-height: 100vh;
     min-width: 100vw;
+    display: inline-block;
+}
+
+#centerTitle{
+    width: 100%;
+    display: inline-block;
+    text-align: center;
 }
 
 @font-face {
@@ -22,6 +29,20 @@ html, body {
     animation: colorChange 10000ms linear infinite;
 }
 
+.settings{
+    display: inline-block;
+}
+
+.settingsText, .settingsTextPower, label{
+    font-family: KoopasInvaders;
+    font-size: 18px;
+    text-align: left;
+}
+
+.settingsTextPower{
+    font-size: 26px;
+}
+
 #textBox{
     border: 1px transparent;
     -webkit-border-radius: 15px;
@@ -39,14 +60,7 @@ html, body {
     animation: glowing 5000ms infinite;
 }
 
-.noAnimation {
-    text-align: center;
-    -webkit-animation: none !important;
-    -moz-animation: none !important;
-    -o-animation: none !important;
-    animation: none !important;
-}
-
+/* Animation - for the box and text changing color */
 @-webkit-keyframes glowing {
     0% {
         background-color: #20d33535;
@@ -102,30 +116,15 @@ html, body {
   }
 }
 
-.settings{
-    display: inline-block;
+.noAnimation {
+    text-align: center;
+    -webkit-animation: none !important;
+    -moz-animation: none !important;
+    -o-animation: none !important;
+    animation: none !important;
 }
 
-.settingsText, .settingsTextPower{
-    font-family: KoopasInvaders;
-    font-size: 18px;
-    text-align: left;
-}
-
-.settingsTextPower{
-    font-size: 26px;
-}
-
-.switchContainer, .switchContainerPower {
-    display: flex;
-    float: right;
-}
-
-.switchContainerPower {
-    margin-top: 6px;
-}
-
-/* The switch - the box around the slider */
+/* Switches - the box around the slider */
 .switch {
     position: relative;
     display: inline-block;
@@ -138,6 +137,15 @@ html, body {
     opacity: 0;
     width: 0;
     height: 0;
+}
+
+.switchContainer, .switchContainerPower {
+    display: flex;
+    float: right;
+}
+
+.switchContainerPower {
+    margin-top: 6px;
 }
 
 .slider, .sliderDisabled {
@@ -177,10 +185,10 @@ input:checked + .sliderDisabled {
 }
 
 input:focus + .sliderDisabled {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #babace;
 }
 
-input:checked + .slider:before,input:checked + .sliderDisabled:before {
+input:checked + .slider:before, input:checked + .sliderDisabled:before {
     -webkit-transform: translateX(13px);
     -ms-transform: translateX(13px);
     transform: translateX(13px);
@@ -192,4 +200,41 @@ input:checked + .slider:before,input:checked + .sliderDisabled:before {
 
 .slider.round:before, .sliderDisabled:before {
     border-radius: 50%;
+}
+
+/* Submenu - setting width and hiding checkmark */
+input, ul.submenu {
+    display: none;
+    padding-left: 0;
+    margin: 0;
+    width: 100vw;
+}
+
+label {
+    position: absolute;
+    display: inline-block;
+    cursor: pointer;
+    width: 100vw;
+}
+
+.submenu{
+    display: flex;
+    float: right;
+    width: 100vw;
+}
+
+input:checked~ul.submenu {
+    display: inline-block;
+    margin-bottom: 0;
+    padding: 0;
+    width: 100%;
+}
+
+input:checked~.downArrowContainer, input:not(:checked)~.upArrowContainer{
+    display: none !important;
+}
+
+input:not(:checked)~.downArrowContainer, input:checked~.upArrowContainer{
+    display: flex;
+    float: right;
 }
