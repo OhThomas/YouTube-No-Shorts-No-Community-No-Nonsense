@@ -103,10 +103,10 @@ function removeSidebarExtended(IO, element){
     if(document.getElementById(IO.buttonID) != null) {document.getElementById(IO.buttonID).classList.add("emptyDSC")}
     // Removing opened attribute from contentContainer element
     if(document.getElementById(IO.id)){ removeAttributeIO(IO,1,document.getElementById(IO.id)) }
-    // Removing mini-guide-visible from ytd-app
-    if(settings.get("sidebarMiniIO").on) { removeAttributeIO(IO,2,element) }
     // Removing guide-persistent-and-visible from ytd-app
     attributeRemoved = (removeAttributeIO(IO,0,element)) 
+    // Removing mini-guide-visible from ytd-app
+    if(settings.get("sidebarMiniIO").on) { removeAttributeIO(IO,2,element) }
     if(attributeRemoved){ console.log("Removing " + IO.name) }
     return attributeRemoved;
 }
