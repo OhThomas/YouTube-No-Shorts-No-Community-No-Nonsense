@@ -5,17 +5,21 @@ const settings = new Map()
 var powerIO = { on: 'true', name: 'Power'}
 var shortsIO = { on: 'true', name: 'Shorts'}
 var shortsVideosIO = { on: 'true', name: 'Shorts Videos'}
+var shortsSidebarIO = { on: 'true', name: 'Shorts Sidebar'}
 var communityIO = { on: 'true', name: 'Community'}
 var breakingNewsIO = { on: 'true', name: 'Breaking News'}
-var sidebarIO = { on: 'true', name: 'Sidebar'}
+var sidebarExtendedIO = { on: 'true', name: 'Sidebar Extended'}
+var sidebarMiniIO = { on: 'true', name: 'Sidebar Mini'}
 var headerIO = { on: 'true', name: 'Header'}
 
 settings.set("Power",powerIO)
 settings.set("Shorts",shortsIO)
 settings.set("Shorts Videos",shortsVideosIO)
+settings.set("Shorts Sidebar",shortsSidebarIO)
 settings.set("Community",communityIO)
 settings.set("Breaking News",breakingNewsIO)
-settings.set("Sidebar",sidebarIO)
+settings.set("Sidebar Extended",sidebarExtendedIO)
+settings.set("Sidebar Mini",sidebarMiniIO)
 settings.set("Header",headerIO)
 
 async function getStorage(key){
@@ -23,7 +27,7 @@ async function getStorage(key){
     return storage;
 }
 
-function setStorage(key, value){ chrome.storage.local.set({[key]: value}) }
+async function setStorage(key, value){ chrome.storage.local.set({[key]: value}) }
 
 function createText(string,color){
     const tempText = document.getElementById("textBox")
@@ -95,9 +99,9 @@ async function clickBuilder(setting){
         textCheck()
         
         // Making sure youtube is open to indicate utility
-        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+        chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
             if (tabs[0].url.match('https:\/\/.*.youtube.com\/.*')) {
-                setStorage(setting.name,check)
+                await setStorage(setting.name,check)
             }
         });
     }

@@ -9,7 +9,7 @@ Chrome extension that lets the user block different sections from YouTube like t
 &nbsp;
 
 <p align="center">
-  <img src="./dsc128.png" />
+  <img src="./images/dsc128halloween.png" />
 </p>
 
 &nbsp;
