@@ -9,7 +9,7 @@ var shortsVideosIO =    { on: 'true', listener: [node], className: ['yt-simple-e
 var shortsSidebarIO =   { on: 'true', listener: [node,node], className: ['yt-simple-endpoint style-scope ytd-mini-guide-entry-renderer','yt-simple-endpoint style-scope ytd-guide-entry-renderer'], listenerID: ['items','sections'], higherClass: ['',''], name: 'Shorts Sidebar', innerHTML: '', title: 'Shorts', id: 'endpoint', waitFunction: waitForMut, deleteFunction: removeByTitle }
 var communityIO =       { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['contents'], higherClass: [''], name: 'Community', innerHTML: 'Latest YouTube posts', waitFunction: waitForMut, deleteFunction: removeByInnerHTML }
 var breakingNewsIO =    { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['title'], higherClass: [''], name: 'Breaking News', innerHTML: 'Breaking news', waitFunction: waitForMut, deleteFunction: removeByInnerHTML }
-var sidebarExtendedIO=  { on: 'true', listener: [node], className: ['tp-yt-app-drawer','ytd-app','style-scope ytd-app','style-scope ytd-rich-section-renderer','video-badge style-scope ytd-rich-grid-media'], higherClass: ['',''], name: 'Sidebar Extended', buttonID: 'guide-button', removeAttributes: ['guide-persistent-and-visible','opened','mini-guide-visible'], outerHTML: 'ytd-mini-guide-renderer', id: 'contentContainer', waitFunction: waitForSidebarExtended, deleteFunction: removeSidebarExtended } //yt-uix-sessionlink ytp-title-fullerscreen-link
+var sidebarExtendedIO=  { on: 'true', listener: [node], className: ['ytd-app'], higherClass: ['',''], name: 'Sidebar Extended', buttonID: 'guide-button', removeAttributes: ['guide-persistent-and-visible','opened','mini-guide-visible'], outerHTML: 'ytd-mini-guide-renderer', id: 'contentContainer', waitFunction: waitForSidebarExtended, deleteFunction: removeSidebarExtended }
 var sidebarMiniIO=      { on: 'true', listener: [node], className: ['ytd-mini-guide-renderer'], listenerID: ['content'], higherClass: [''], name: 'Sidebar Mini', removeAttributes: ['mini-guide-visible'], waitFunction: waitForMut, deleteFunction: addEmptyClass }
 var headerIO =          { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], higherClass: ['',''], name: 'Header', innerHTML: '', id: 'header', waitFunction: waitForMultiMut, deleteFunction: removeHeader, deleteMutFunction: removeHeaderMut }
 
@@ -179,33 +179,51 @@ function waitForMut(IO){
 
 function waitForSidebarExtended(IO){
     // Checking if we can hide the element needed, otherwise we'll wait for mutation
-    if( document.getElementsByTagName(IO.className[1])[0] != null){
-        IO.deleteFunction(IO, document.getElementsByTagName(IO.className[1])[0])
+    if( document.getElementsByTagName(IO.className[0])[0] != null){
+        IO.deleteFunction(IO, document.getElementsByTagName(IO.className[0])[0])
     }
     preDisconnect(IO.listener[0])
-    IO.listener[0] = new MutationObserver(mutations => {
+    IO.listener[0] = new MutationObserver(() => {
         if (checkToDisconnect(IO.listener[0],IO.on)){ return; }
-        for(mut in mutations){
-            // Looking for changes to style-scope ytd-app, style-scope ytd-rich-section-renderer, and video-badge style-scope ytd-rich-grid-media
-            // to remove guide attributes from ytd-app element that prevent the page from taking up the sidebar space
-            if(IO.className[4] == mutations[mut].target.classList ||
-                IO.className[2] == mutations[mut].target.classList ||
-                (IO.className[3] == mutations[mut].target.classList && "content" == mutations[mut].target.id)){
-                if( document.getElementsByTagName(IO.className[1])[0] != null){
-                    IO.deleteFunction(IO, document.getElementsByTagName(IO.className[1])[0])
-                }
-            }
-            // Looking for mutations from mini-guide that will trigger resizing page
-            if(mutations[mut].target.className == IO.className[2]){
-                if(mutations[mut].target.parentNode && mutations[mut].target.parentNode.parentNode){ 
-                    attributeRemoved = IO.deleteFunction(IO, mutations[mut].target.parentNode.parentNode)
-                }
-            }
+        if( document.getElementsByTagName(IO.className[0])[0] != null){
+            IO.deleteFunction(IO, document.getElementsByTagName(IO.className[0])[0])
         }
     });
     try{
-        IO.listener[0].observe(document.body, { childList: true, subtree: true });
+        waitForObserver('ytd-app').then((element) =>{
+            IO.listener[0].observe(element, {attributeFilter: [IO.removeAttributes[0],IO.removeAttributes[1],IO.removeAttributes[2]]})
+        })
     } catch { console.log("Body not loaded yet.") };
+}
+
+function waitForObserverID(listenerID){
+    return new Promise(resolve => {
+        let ele = document.getElementById(listenerID)
+        if (ele){ return resolve(ele); }
+        const observer = new MutationObserver(() => {
+            let ele = document.getElementById(listenerID)
+            if (ele) {
+                observer.disconnect();
+                return resolve(ele);
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
+}
+
+function waitForObserver(name){
+    return new Promise(resolve => {
+        let ele = document.getElementsByTagName(name)[0]
+        if (ele){ return resolve(ele); }
+        const observer = new MutationObserver(() => {
+            let ele = document.getElementsByTagName(name)[0]
+            if (ele) {
+                observer.disconnect();
+                return resolve(ele);
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
 }
 
 async function waitForDocument(){
@@ -271,15 +289,6 @@ window.onunload = function() {
     }
     return;
 }
-
-window.addEventListener('resize', function() {
-    if (window.innerWidth != prevWidth ) {
-        prevWidth = window.innerWidth;
-        if(settings.get("powerIO").on == true && settings.get("sidebarExtendedIO").on){
-            settings.get("sidebarExtendedIO").waitFunction(settings.get("sidebarExtendedIO"))
-        }
-    }
-}, true);
 
 waitForDocument().then(() => {
     startup()
