@@ -4,14 +4,14 @@ var node = document.createElement('p');
 var prevWidth = window.innerWidth;
 
 var powerIO =           { on: 'true', listener: [node], className: [''], name: 'Power', innerHTML: '' }
-var shortsIO =          { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-shelf-renderer','style-scope ytd-reel-shelf-renderer'], listenerID: ['contents','contents'], higherClass: ['',''], name: 'Shorts', innerHTML: 'Shorts', waitFunction: waitForMut, deleteFunction: removeByInnerHTML }
-var shortsVideosIO =    { on: 'true', listener: [node], className: ['yt-simple-endpoint inline-block style-scope ytd-thumbnail'], listenerID: ['contents'], higherClass: ['.style-scope.ytd-item-section-renderer'], name: 'Shorts Videos', innerHTML: '/shorts/', waitFunction: waitForMut, deleteFunction: removeByHREF }
-var shortsSidebarIO =   { on: 'true', listener: [node,node], className: ['yt-simple-endpoint style-scope ytd-mini-guide-entry-renderer','yt-simple-endpoint style-scope ytd-guide-entry-renderer'], listenerID: ['items','sections'], higherClass: ['',''], name: 'Shorts Sidebar', innerHTML: '', title: 'Shorts', id: 'endpoint', waitFunction: waitForMut, deleteFunction: removeByTitle }
-var communityIO =       { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['contents'], higherClass: [''], name: 'Community', innerHTML: 'Latest YouTube posts', waitFunction: waitForMut, deleteFunction: removeByInnerHTML }
-var breakingNewsIO =    { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['title'], higherClass: [''], name: 'Breaking News', innerHTML: 'Breaking news', waitFunction: waitForMut, deleteFunction: removeByInnerHTML }
-var sidebarExtendedIO=  { on: 'true', listener: [node], className: ['ytd-app'], higherClass: ['',''], name: 'Sidebar Extended', buttonID: 'guide-button', removeAttributes: ['guide-persistent-and-visible','opened','mini-guide-visible'], outerHTML: 'ytd-mini-guide-renderer', id: 'contentContainer', waitFunction: waitForSidebarExtended, deleteFunction: removeSidebarExtended }
-var sidebarMiniIO=      { on: 'true', listener: [node], className: ['ytd-mini-guide-renderer'], listenerID: ['content'], higherClass: [''], name: 'Sidebar Mini', removeAttributes: ['mini-guide-visible'], waitFunction: waitForMut, deleteFunction: addEmptyClass }
-var headerIO =          { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], higherClass: ['',''], name: 'Header', innerHTML: '', id: 'header', waitFunction: waitForMultiMut, deleteFunction: removeHeader, deleteMutFunction: removeHeaderMut }
+var shortsIO =          { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-shelf-renderer','style-scope ytd-reel-shelf-renderer'], listenerID: ['content','content'], name: 'Shorts', innerHTML: 'Shorts', waitFunction: waitForMut, deleteFunction: removeByInnerHTML }
+var shortsVideosIO =    { on: 'true', listener: [node], className: ['yt-simple-endpoint inline-block style-scope ytd-thumbnail'], listenerID: ['content'], name: 'Shorts Videos', innerHTML: '/shorts/', waitFunction: waitForMut, deleteFunction: removeByHREF }
+var shortsSidebarIO =   { on: 'true', listener: [node,node], className: ['yt-simple-endpoint style-scope ytd-mini-guide-entry-renderer','yt-simple-endpoint style-scope ytd-guide-entry-renderer'], listenerID: ['content','sections'], name: 'Shorts Sidebar', innerHTML: '', title: 'Shorts', id: 'endpoint', waitFunction: waitForMut, deleteFunction: removeByTitle }
+var communityIO =       { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Community', innerHTML: 'Latest YouTube posts', waitFunction: waitForMut, deleteFunction: removeByInnerHTML }
+var breakingNewsIO =    { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Breaking News', innerHTML: 'Breaking news', waitFunction: waitForMut, deleteFunction: removeByInnerHTML }
+var sidebarExtendedIO=  { on: 'true', listener: [node], className: ['ytd-app'], name: 'Sidebar Extended', buttonID: 'guide-button', removeAttributes: ['guide-persistent-and-visible','opened','mini-guide-visible'], outerHTML: 'ytd-mini-guide-renderer', id: 'contentContainer', waitFunction: waitForSidebarExtended, deleteFunction: removeSidebarExtended }
+var sidebarMiniIO=      { on: 'true', listener: [node], className: ['ytd-mini-guide-renderer'], listenerID: ['content'], name: 'Sidebar Mini', removeAttributes: ['mini-guide-visible'], waitFunction: waitForMut, deleteFunction: removeClassDisplay }
+var headerIO =          { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], listenerID: ['primary','content'], name: 'Header', innerHTML: '', id: 'header', waitFunction: waitForMut, deleteFunction: removeHeader }
 
 settings.set("powerIO",powerIO)
 settings.set("shortsIO",shortsIO)
@@ -40,18 +40,16 @@ function removeHeader(IO,className){
         if(elements[element].id == IO.id){
             console.log("Removing " + IO.name + " at " + elements[element].parentNode.className)
             elements[element].parentNode.removeChild(elements[element]);
+            return true;
         }
     }
-}
-
-function removeHeaderMut(IO, i, mutations){
-    for(mut in mutations){
-        if(mutations[mut].target.className == IO.className[i] && mutations[mut].target.id == IO.id){
-            console.log("Removing " + IO.name + " at " + mutations[mut].target.parentNode.className)
-            mutations[mut].target.parentNode.removeChild(mutations[mut].target);
-            // We can disconnect as it only loads once but will keep running to future proof
-        }
-    }
+    // Slower for some reason, leaving to debug later
+    // let elem = document.getElementById(IO.id)
+    // if(elem && elem.parentNode){
+    //     console.log("Removing " + IO.name + " at " + elem.parentNode.className)
+    //     elem.parentNode.removeChild(elem)
+    //     return true;
+    // }
 }
 
 function removeByTitle(IO, className){
@@ -64,7 +62,7 @@ function removeByTitle(IO, className){
     }
 }
 
-function removeByHREF(IO, className, higherClass){
+function removeByHREF(IO, className){
     const elements = document.getElementsByClassName(className);
     for(let element= 0; element < elements.length; element++){
         if(elements[element].href && elements[element].href.match(IO.innerHTML)){
@@ -76,23 +74,11 @@ function removeByHREF(IO, className, higherClass){
 }
 
 function removeByInnerHTML(IO,className){
-    let elements = document.getElementsByTagName("span")
-    for(ele in elements){
-        if(elements[ele].className == className && elements[ele].innerHTML.match(IO.innerHTML)){
-            console.log("Removing " + IO.name + " at " + elements[ele].className)
-            // On search pages
-            if(className.match("ytd-reel-shelf")){
-                // ytd-reel-shelf-renderer -> div.id title-container -> h2 -> current span element
-                elements[ele].parentNode.parentNode.parentNode.remove();
-            }
-            // On home/subscription pages
-            else{
-                // ytd-rich-section-renderer -> div.id content -> ytd-rich-shelf-renderer->
-                // div.id dismissable -> div.id rich-shelf-header-container -> div.id rich-shelf-header ->
-                // h2 -> div.id title-container -> div.id title-text -> current span element
-                elements[ele].parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.remove()
-            }
-            break; // break outer if only one section available per webpage
+    let elements = document.getElementsByClassName(className)
+    for (elem in elements){
+        if(elements[elem].innerHTML != null && elements[elem].innerHTML.match(IO.innerHTML)){
+            elements[elem].parentNode.parentNode.parentNode.remove();
+            break; // break if only one section available per load
         }
     }
 }
@@ -120,19 +106,7 @@ function removeAttributeIO(IO, i, element){
     return false;
 }
 
-function preDisconnect(listener){
-    if(listener.disconnect != null){ listener.disconnect() }
-}
-
-function checkToDisconnect(listener,on){
-    if(settings.get("powerIO").on == false || on == false){
-        listener.disconnect();
-        return true;
-    }
-    return false;
-}
-
-function addEmptyClass(IO){
+function removeClassDisplay(IO){
     let elements = document.getElementsByClassName(IO.className[0])
     for(elem in elements){
         if(elements[elem].classList){
@@ -149,30 +123,30 @@ function addEmptyClass(IO){
     }
 }
 
-function waitForMultiMut(IO) {
-    for(let i = 0; i < IO.listener.length; i++){
-        IO.deleteFunction(IO,IO.className[i])
-        preDisconnect(IO.listener[i])
-        IO.listener[i] = new MutationObserver(mutations => {
-            if(checkToDisconnect(IO.listener[i],IO.on)) { return; }
-            IO.deleteMutFunction(IO, i, mutations)
-        });
-        try{
-            IO.listener[i].observe(document.body, { childList: true, subtree: true });
-        } catch { console.log("Body not loaded yet.") };
+function preDisconnect(listener){
+    if(listener.disconnect != null){ listener.disconnect() }
+}
+
+function checkToDisconnect(listener,on){
+    if(settings.get("powerIO").on == false || on == false){
+        listener.disconnect();
+        return true;
     }
+    return false;
 }
 
 function waitForMut(IO){
     for(let i = 0; i < IO.listener.length; i++){
-        IO.deleteFunction(IO,IO.className[i],IO.higherClass[i])
+        IO.deleteFunction(IO,IO.className[i])
         preDisconnect(IO.listener[i])
         IO.listener[i] = new MutationObserver(function() {
             if(checkToDisconnect(IO.listener[i], IO.on)) { return; }
-            if(IO.deleteFunction(IO,IO.className[i],IO.higherClass[i])) { IO.listener[i].disconnect()}
+            if(IO.deleteFunction(IO,IO.className[i])) { IO.listener[i].disconnect() }
         });
         try{
-            IO.listener[i].observe(document.body, { childList: true, subtree: true });
+            waitForObserverID(IO.listenerID[i]).then((element) => {
+                IO.listener[i].observe(element, { childList: true, subtree: true });
+            });
         } catch { console.log("Body not loaded yet.") };
     }
 }
@@ -190,7 +164,7 @@ function waitForSidebarExtended(IO){
         }
     });
     try{
-        waitForObserver('ytd-app').then((element) =>{
+        waitForObserver(IO.className[0]).then((element) =>{
             IO.listener[0].observe(element, {attributeFilter: [IO.removeAttributes[0],IO.removeAttributes[1],IO.removeAttributes[2]]})
         })
     } catch { console.log("Body not loaded yet.") };
