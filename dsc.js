@@ -9,7 +9,7 @@ var shortsVideosIO =    { on: 'true', listener: [node], className: ['yt-simple-e
 var shortsSidebarIO =   { on: 'true', listener: [node,node], className: ['yt-simple-endpoint style-scope ytd-mini-guide-entry-renderer','yt-simple-endpoint style-scope ytd-guide-entry-renderer'], listenerID: ['items','sections'], higherClass: ['',''], name: 'Shorts Sidebar', innerHTML: '', title: 'Shorts', id: 'endpoint', waitFunction: waitForMut, deleteFunction: removeByTitle }
 var communityIO =       { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['contents'], higherClass: [''], name: 'Community', innerHTML: 'Latest YouTube posts', waitFunction: waitForMut, deleteFunction: removeByInnerHTML }
 var breakingNewsIO =    { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['title'], higherClass: [''], name: 'Breaking News', innerHTML: 'Breaking news', waitFunction: waitForMut, deleteFunction: removeByInnerHTML }
-var sidebarExtendedIO=  { on: 'true', listener: [node], className: ['tp-yt-app-drawer','ytd-app','style-scope ytd-app','style-scope ytd-rich-section-renderer'], higherClass: ['',''], name: 'Sidebar Extended', buttonID: 'guide-button', removeAttributes: ['guide-persistent-and-visible','opened','mini-guide-visible'], outerHTML: 'ytd-mini-guide-renderer', id: 'contentContainer', waitFunction: waitForSidebarExtended, deleteFunction: removeSidebarExtended }
+var sidebarExtendedIO=  { on: 'true', listener: [node], className: ['tp-yt-app-drawer','ytd-app','style-scope ytd-app','style-scope ytd-rich-section-renderer','video-badge style-scope ytd-rich-grid-media'], higherClass: ['',''], name: 'Sidebar Extended', buttonID: 'guide-button', removeAttributes: ['guide-persistent-and-visible','opened','mini-guide-visible'], outerHTML: 'ytd-mini-guide-renderer', id: 'contentContainer', waitFunction: waitForSidebarExtended, deleteFunction: removeSidebarExtended } //yt-uix-sessionlink ytp-title-fullerscreen-link
 var sidebarMiniIO=      { on: 'true', listener: [node], className: ['ytd-mini-guide-renderer'], listenerID: ['content'], higherClass: [''], name: 'Sidebar Mini', removeAttributes: ['mini-guide-visible'], waitFunction: waitForMut, deleteFunction: addEmptyClass }
 var headerIO =          { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], higherClass: ['',''], name: 'Header', innerHTML: '', id: 'header', waitFunction: waitForMultiMut, deleteFunction: removeHeader, deleteMutFunction: removeHeaderMut }
 
@@ -186,9 +186,10 @@ function waitForSidebarExtended(IO){
     IO.listener[0] = new MutationObserver(mutations => {
         if (checkToDisconnect(IO.listener[0],IO.on)){ return; }
         for(mut in mutations){
-            // Looking for changes to style-scope ytd-app and style-scope ytd-rich-section-renderer to remove 
-            // guide attributes from ytd-app element that prevent the page from taking up the sidebar space
-            if(IO.className[2] == mutations[mut].target.classList ||
+            // Looking for changes to style-scope ytd-app, style-scope ytd-rich-section-renderer, and video-badge style-scope ytd-rich-grid-media
+            // to remove guide attributes from ytd-app element that prevent the page from taking up the sidebar space
+            if(IO.className[4] == mutations[mut].target.classList ||
+                IO.className[2] == mutations[mut].target.classList ||
                 (IO.className[3] == mutations[mut].target.classList && "content" == mutations[mut].target.id)){
                 if( document.getElementsByTagName(IO.className[1])[0] != null){
                     IO.deleteFunction(IO, document.getElementsByTagName(IO.className[1])[0])
