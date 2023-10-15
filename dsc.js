@@ -77,10 +77,21 @@ function removeByHREF(IO, className){
 function removeByInnerHTML(IO,className){
     let elements = document.getElementsByClassName(className)
     for (elem in elements){
-        if(elements[elem].innerHTML != null && elements[elem].innerHTML.match(IO.innerHTML) && !elements[elem].parentNode.parentNode.parentNode.classList.contains(emptyDSC)){
-            console.log("Removing " + IO.name + " at " + className)
-            elements[elem].parentNode.parentNode.parentNode.classList.add(emptyDSC)
-            break; // break if only one section available per load
+        // On search pages
+        if(className == IO.className[1]){
+            if(elements[elem].innerHTML != null && elements[elem].innerHTML.match(IO.innerHTML) && !elements[elem].parentNode.classList.contains(emptyDSC)){
+                console.log("Removing " + IO.name + " at " + className)
+                elements[elem].parentNode.classList.add(emptyDSC)
+                break; // break if only one section available per load
+            }
+        }
+        // On home/subscription pages
+        else{
+            if(elements[elem].innerHTML != null && elements[elem].innerHTML.match(IO.innerHTML) && !elements[elem].parentNode.parentNode.parentNode.classList.contains(emptyDSC)){
+                console.log("Removing " + IO.name + " at " + className)
+                elements[elem].parentNode.parentNode.parentNode.classList.add(emptyDSC)
+                break; // break if only one section available per load
+            }
         }
     }
 }
@@ -180,7 +191,7 @@ function restoreByTitle(IO){
 function restoreSidebarExtended(IO){
     // Restoring button
     if(document.getElementById(IO.buttonID) != null) {
-        console.log("Removing empty class from "+IO.className[0])
+        console.log("Removing empty class from "+IO.name)
         document.getElementById(IO.buttonID).classList.remove(emptyDSC)
     }
     // Adding mini-visible to ytd-app if not on
