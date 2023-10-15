@@ -132,7 +132,7 @@ function restoreInnerHTML(IO){
             if(elements[elem].innerHTML != null && elements[elem].innerHTML.match(IO.innerHTML)){
                 console.log("Removing empty class from "+ IO.className[i])
                 elements[elem].parentNode.parentNode.parentNode.classList.remove(emptyDSC)
-                break;
+                // break;
             }
         }
     }
