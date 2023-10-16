@@ -10,7 +10,9 @@ var communityIO = { on: 'true', name: 'Community'}
 var breakingNewsIO = { on: 'true', name: 'Breaking News'}
 var sidebarExtendedIO = { on: 'true', name: 'Sidebar Extended'}
 var sidebarMiniIO = { on: 'true', name: 'Sidebar Mini'}
-var headerIO = { on: 'true', name: 'Header'}
+var headerTopicsIO = { on: 'true', name: 'Header Topics'}
+var headerNotificationIO = { on: 'true', name: 'Header Notification'}
+var headerUploadIO = { on: 'true', name: 'Header Upload'}
 
 settings.set("Power",powerIO)
 settings.set("Shorts",shortsIO)
@@ -20,7 +22,9 @@ settings.set("Community",communityIO)
 settings.set("Breaking News",breakingNewsIO)
 settings.set("Sidebar Extended",sidebarExtendedIO)
 settings.set("Sidebar Mini",sidebarMiniIO)
-settings.set("Header",headerIO)
+settings.set("Header Topics",headerTopicsIO)
+settings.set("Header Notification",headerNotificationIO)
+settings.set("Header Upload",headerUploadIO)
 
 async function getStorage(key){
     var storage = await chrome.storage.local.get(key).then((result) => { return result[key] });

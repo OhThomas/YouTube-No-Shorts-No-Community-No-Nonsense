@@ -4,14 +4,16 @@ var node = document.createElement('p');
 const emptyDSC = "emptyDSC"
 
 var powerIO =           { on: 'true', listener: [node], className: [''], name: 'Power', innerHTML: '' }
-var shortsIO =          { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-shelf-renderer','style-scope ytd-reel-shelf-renderer'], listenerID: ['content','content'], name: 'Shorts', innerHTML: 'Shorts', waitFunction: waitForMut, deleteFunction: removeByInnerHTML, restoreFunction: restoreInnerHTML  }
-var shortsVideosIO =    { on: 'true', listener: [node], className: ['yt-simple-endpoint inline-block style-scope ytd-thumbnail'], listenerID: ['content'], name: 'Shorts Videos', innerHTML: '/shorts/', waitFunction: waitForMut, deleteFunction: removeByHREF, restoreFunction: restoreByHREF }
-var shortsSidebarIO =   { on: 'true', listener: [node,node], className: ['yt-simple-endpoint style-scope ytd-mini-guide-entry-renderer','yt-simple-endpoint style-scope ytd-guide-entry-renderer'], listenerID: ['content','sections'], name: 'Shorts Sidebar', innerHTML: '', title: 'Shorts', id: 'endpoint', waitFunction: waitForMut, deleteFunction: removeByTitle, restoreFunction: restoreByTitle }
-var communityIO =       { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Community', innerHTML: 'Latest YouTube posts', waitFunction: waitForMut, deleteFunction: removeByInnerHTML, restoreFunction: restoreInnerHTML }
-var breakingNewsIO =    { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Breaking News', innerHTML: 'Breaking news', waitFunction: waitForMut, deleteFunction: removeByInnerHTML, restoreFunction: restoreInnerHTML  }
-var sidebarExtendedIO=  { on: 'true', listener: [node], className: ['ytd-app'], name: 'Sidebar Extended', buttonID: 'guide-button', removeAttributes: ['guide-persistent-and-visible','opened','mini-guide-visible'], outerHTML: 'ytd-mini-guide-renderer', id: 'contentContainer', waitFunction: waitForSidebarExtended, deleteFunction: removeSidebarExtended, restoreFunction: restoreSidebarExtended }
-var sidebarMiniIO=      { on: 'true', listener: [node], className: ['ytd-mini-guide-renderer'], listenerID: ['content'], name: 'Sidebar Mini', removeAttributes: ['mini-guide-visible'], waitFunction: waitForMut, deleteFunction: removeClassDisplay, restoreFunction: restoreClassDisplay }
-var headerIO =          { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], listenerID: ['content','content'], name: 'Header', innerHTML: '', id: 'header', waitFunction: waitForMut, deleteFunction: removeHeader, restoreFunction: restoreHeader }
+var shortsIO =          { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-shelf-renderer','style-scope ytd-reel-shelf-renderer'], listenerID: ['content','content'], name: 'Shorts', innerHTML: 'Shorts', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByInnerHTML, restoreFunction: restoreByInnerHTML  }
+var shortsVideosIO =    { on: 'true', listener: [node], className: ['yt-simple-endpoint inline-block style-scope ytd-thumbnail'], listenerID: ['content'], name: 'Shorts Videos', innerHTML: '/shorts/', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByHREF, restoreFunction: restoreByHREF }
+var shortsSidebarIO =   { on: 'true', listener: [node,node], className: ['yt-simple-endpoint style-scope ytd-mini-guide-entry-renderer','yt-simple-endpoint style-scope ytd-guide-entry-renderer'], listenerID: ['content','sections'], name: 'Shorts Sidebar', innerHTML: '', title: 'Shorts', id: 'endpoint', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByTitle, restoreFunction: restoreByTitle }
+var communityIO =       { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Community', innerHTML: 'Latest YouTube posts', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByInnerHTML, restoreFunction: restoreByInnerHTML }
+var breakingNewsIO =    { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Breaking News', innerHTML: 'Breaking news', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByInnerHTML, restoreFunction: restoreByInnerHTML  }
+var sidebarExtendedIO=  { on: 'true', listener: [node], className: ['ytd-app'], name: 'Sidebar Extended', buttonID: 'guide-button', removeAttributes: ['guide-persistent-and-visible','opened','mini-guide-visible'], observerFunction: waitForObserver, outerHTML: 'ytd-mini-guide-renderer', id: 'contentContainer', waitFunction: waitForSidebarExtended, deleteFunction: removeSidebarExtended, restoreFunction: restoreSidebarExtended }
+var sidebarMiniIO=      { on: 'true', listener: [node], className: ['ytd-mini-guide-renderer'], listenerID: ['content'], name: 'Sidebar Mini', removeAttributes: ['mini-guide-visible'], observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeClassDisplay, restoreFunction: restoreClassDisplay }
+var headerTopicsIO =    { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], listenerID: ['content','content'], name: 'Header Topics', innerHTML: '', id: 'header', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeHeader, restoreFunction: restoreHeader }
+var headerNotificationIO={ on: 'true', listener: [node], className: ['ytd-notification-topbar-button-renderer'], listenerID: ['buttons'], name: 'Header Notification', innerHTML: '', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByName, restoreFunction: restoreByName }
+var headerUploadIO      ={ on: 'true', listener: [node], className: ['ytd-topbar-menu-button-renderer'], listenerID: ['buttons'], name: 'Header Upload', innerHTML: '', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByName, restoreFunction: restoreByName }
 
 settings.set("powerIO",powerIO)
 settings.set("shortsIO",shortsIO)
@@ -21,7 +23,9 @@ settings.set("communityIO",communityIO)
 settings.set("breakingNewsIO",breakingNewsIO)
 settings.set("sidebarExtendedIO",sidebarExtendedIO)
 settings.set("sidebarMiniIO",sidebarMiniIO)
-settings.set("headerIO",headerIO)
+settings.set("headerTopicsIO",headerTopicsIO)
+settings.set("headerNotificationIO",headerNotificationIO)
+settings.set("headerUploadIO",headerUploadIO)
 
 async function getStorage(key){
     var storage = await chrome.storage.local.get(key).then((result) => { return result[key] });
@@ -74,7 +78,7 @@ function removeByHREF(IO, className){
     }
 }
 
-function removeByInnerHTML(IO,className){
+function removeByInnerHTML(IO, className){
     let elements = document.getElementsByClassName(className)
     for (elem in elements){
         // On search pages
@@ -93,6 +97,15 @@ function removeByInnerHTML(IO,className){
                 break; // break if only one section available per load
             }
         }
+    }
+}
+
+function removeByName(IO, className){
+    let element = document.getElementsByTagName(className)[0]
+    if(element && !element.classList.contains(emptyDSC)){
+        console.log("Removing "+ IO.name + " at " + className)
+        element.classList.add(emptyDSC)
+        return true;
     }
 }
 
@@ -136,7 +149,7 @@ function removeClassDisplay(IO){
     }
 }
 
-function restoreInnerHTML(IO){
+function restoreByInnerHTML(IO){
     for(let i = 0; i < IO.className.length; i++){
         let elements = document.getElementsByClassName(IO.className[i])
         for (elem in elements){
@@ -188,6 +201,15 @@ function restoreByTitle(IO){
     }
 }
 
+function restoreByName(IO){
+    for(let i = 0; i < IO.className.length; i++){
+        let element = document.getElementsByTagName(IO.className[i])[0]
+        if (element && element.classList.contains(emptyDSC)){
+            element.classList.remove(emptyDSC)
+        }
+    }
+}
+
 function restoreSidebarExtended(IO){
     // Restoring button
     if(document.getElementById(IO.buttonID) != null) {
@@ -234,7 +256,7 @@ function waitForMut(IO){
             if(IO.deleteFunction(IO,IO.className[i])) { IO.listener[i].disconnect() }
         });
         try{
-            waitForObserverID(IO.listenerID[i]).then((element) => {
+            IO.observerFunction(IO.listenerID[i]).then((element) => {
                 IO.listener[i].observe(element, { childList: true, subtree: true });
             });
         } catch { console.log("Body not loaded yet.") };
@@ -254,7 +276,7 @@ function waitForSidebarExtended(IO){
         }
     });
     try{
-        waitForObserver(IO.className[0]).then((element) =>{
+        IO.observerFunction(IO.className[0]).then((element) =>{
             IO.listener[0].observe(element, {attributeFilter: [IO.removeAttributes[0],IO.removeAttributes[1],IO.removeAttributes[2]]})
         })
     } catch { console.log("Body not loaded yet.") };
