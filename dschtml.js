@@ -88,10 +88,7 @@ function checkmarkCheck(){
     }
 
     chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
-        let color = true;
-        if(!tabs[0].url.includes("youtube.com") || settings.get("Power").on == false){
-            color = false;
-        }
+        let color = (tabs[0].url.includes("youtube.com") && settings.get("Power").on == true)
         addTextAnimation(shortsElement, color, shortsCheck)
         addTextAnimation(communityElement, color, communityCheck)
         addTextAnimation(sidebarElement, color, sidebarCheck)

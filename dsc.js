@@ -379,7 +379,6 @@ async function startup(){
 
 chrome.storage.onChanged.addListener(async (changes, namespace) => {
     for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
-        await setStorage(key,newValue)
         await resetValues();
         if(newValue == true){
             if(key == "Power"){ deleteIO() }
