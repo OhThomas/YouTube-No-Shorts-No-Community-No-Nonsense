@@ -14,6 +14,7 @@ var sidebarMiniIO=      { on: 'true', listener: [node], className: ['ytd-mini-gu
 var headerTopicsIO =    { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], listenerID: ['content','content'], name: 'Header Topics', innerHTML: '', id: 'header', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeHeader, restoreFunction: restoreHeader }
 var headerNotificationIO={ on: 'true', listener: [node], className: ['ytd-notification-topbar-button-renderer'], listenerID: ['buttons'], name: 'Header Notification', innerHTML: '', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByName, restoreFunction: restoreByName }
 var headerUploadIO      ={ on: 'true', listener: [node], className: ['ytd-topbar-menu-button-renderer'], listenerID: ['buttons'], name: 'Header Upload', innerHTML: '', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByName, restoreFunction: restoreByName }
+var headerVoiceIO       ={ on: 'true', listener: [node], className: ['voice-search-button'], listenerID: ['center'], id: 'voice-search-button', name: 'Header Voice', innerHTML: '', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByID, restoreFunction: restoreByID }
 
 settings.set("powerIO",powerIO)
 settings.set("shortsIO",shortsIO)
@@ -26,6 +27,7 @@ settings.set("sidebarMiniIO",sidebarMiniIO)
 settings.set("headerTopicsIO",headerTopicsIO)
 settings.set("headerNotificationIO",headerNotificationIO)
 settings.set("headerUploadIO",headerUploadIO)
+settings.set("headerVoiceIO",headerVoiceIO)
 
 async function getStorage(key){
     var storage = await chrome.storage.local.get(key).then((result) => { return result[key] });
@@ -102,6 +104,15 @@ function removeByInnerHTML(IO, className){
 
 function removeByName(IO, className){
     let element = document.getElementsByTagName(className)[0]
+    if(element && !element.classList.contains(emptyDSC)){
+        console.log("Removing "+ IO.name + " at " + className)
+        element.classList.add(emptyDSC)
+        return true;
+    }
+}
+
+function removeByID(IO, className){
+    let element = document.getElementById(IO.id)
     if(element && !element.classList.contains(emptyDSC)){
         console.log("Removing "+ IO.name + " at " + className)
         element.classList.add(emptyDSC)
@@ -205,8 +216,17 @@ function restoreByName(IO){
     for(let i = 0; i < IO.className.length; i++){
         let element = document.getElementsByTagName(IO.className[i])[0]
         if (element && element.classList.contains(emptyDSC)){
+            console.log("Removing empty class from "+IO.className[i])
             element.classList.remove(emptyDSC)
         }
+    }
+}
+
+function restoreByID(IO){
+    let element = document.getElementById(IO.id)
+    if (element && element.classList.contains(emptyDSC)){
+        console.log("Removing empty class from "+IO.name)
+        element.classList.remove(emptyDSC)
     }
 }
 

@@ -13,6 +13,7 @@ var sidebarMiniIO = { on: 'true', name: 'Sidebar Mini'}
 var headerTopicsIO = { on: 'true', name: 'Header Topics'}
 var headerNotificationIO = { on: 'true', name: 'Header Notification'}
 var headerUploadIO = { on: 'true', name: 'Header Upload'}
+var headerVoiceIO = { on: 'true', name: 'Header Voice'}
 
 settings.set("Power",powerIO)
 settings.set("Shorts",shortsIO)
@@ -25,6 +26,7 @@ settings.set("Sidebar Mini",sidebarMiniIO)
 settings.set("Header Topics",headerTopicsIO)
 settings.set("Header Notification",headerNotificationIO)
 settings.set("Header Upload",headerUploadIO)
+settings.set("Header Voice",headerVoiceIO)
 
 async function getStorage(key){
     var storage = await chrome.storage.local.get(key).then((result) => { return result[key] });
