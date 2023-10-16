@@ -1,19 +1,20 @@
 var window = window ?? self;
 let red = "#FF4968"; let green = "#0BF01E"; let black = "#000000";
 const settings = new Map()
+const emptyDSC = "emptyDSC"
 
 var powerIO = { on: 'true', name: 'Power'}
-var shortsIO = { on: 'true', name: 'Shorts'}
-var shortsVideosIO = { on: 'true', name: 'Shorts Videos'}
-var shortsSidebarIO = { on: 'true', name: 'Shorts Sidebar'}
-var communityIO = { on: 'true', name: 'Community'}
-var breakingNewsIO = { on: 'true', name: 'Breaking News'}
-var sidebarExtendedIO = { on: 'true', name: 'Sidebar Extended'}
-var sidebarMiniIO = { on: 'true', name: 'Sidebar Mini'}
-var headerTopicsIO = { on: 'true', name: 'Header Topics'}
-var headerNotificationIO = { on: 'true', name: 'Header Notification'}
-var headerUploadIO = { on: 'true', name: 'Header Upload'}
-var headerVoiceIO = { on: 'true', name: 'Header Voice'}
+var shortsIO = { on: 'true', name: 'Shorts', section: 'Shorts'}
+var shortsVideosIO = { on: 'true', name: 'Shorts Videos', section: 'Shorts'}
+var shortsSidebarIO = { on: 'true', name: 'Shorts Sidebar', section: 'Shorts'}
+var communityIO = { on: 'true', name: 'Community', section: 'Community'}
+var breakingNewsIO = { on: 'true', name: 'Breaking News', section: 'Community'}
+var sidebarExtendedIO = { on: 'true', name: 'Sidebar Extended', section: 'Sidebar'}
+var sidebarMiniIO = { on: 'true', name: 'Sidebar Mini', section: 'Sidebar'}
+var headerTopicsIO = { on: 'true', name: 'Header Topics', section: 'Header'}
+var headerNotificationIO = { on: 'true', name: 'Header Notification', section: 'Header'}
+var headerUploadIO = { on: 'true', name: 'Header Upload', section: 'Header'}
+var headerVoiceIO = { on: 'true', name: 'Header Voice', section: 'Header'}
 
 settings.set("Power",powerIO)
 settings.set("Shorts",shortsIO)
@@ -48,6 +49,54 @@ function createText(string,color){
 function updateText(string){
     const tempText = document.getElementById("textBox")
     tempText.innerHTML = string
+}
+
+function addTextAnimation(element, color, display){
+    try{
+        if(display){
+            element.classList.remove(emptyDSC)
+            if(color == true){
+                element.classList.remove('noAnimation')
+                element.style.animation = "colorChange 10000ms linear infinite"
+                element.style.webkitTextFillColor = "#00000000" }
+            else{
+                element.classList.add('noAnimation')
+                element.style.webkitTextFillColor = "#000000" 
+            }
+        }
+        else if(!element.classList.contains(emptyDSC)){
+            element.classList.add(emptyDSC)
+            element.classList.add('noAnimation')
+        }
+    } catch{}
+}
+
+function checkmarkCheck(){
+    let shortsCheck = true; communityCheck = true; sidebarCheck = true; headerCheck = true;
+    const shortsElement = document.getElementById("shortsCheckmark");
+    const communityElement = document.getElementById("communityCheckmark");
+    const sidebarElement = document.getElementById("sidebarCheckmark");
+    const headerElement = document.getElementById("headerCheckmark");
+
+    if(shortsElement == null || communityElement == null || sidebarElement == null || headerElement == null){ return }
+
+    for (const [key, value] of settings.entries()) {
+        if (value.on == false && value.section == 'Shorts'){ shortsCheck = false; }
+        if (value.on == false && value.section == 'Community'){ communityCheck = false; }
+        if (value.on == false && value.section == 'Sidebar'){ sidebarCheck = false; }
+        if (value.on == false && value.section == 'Header'){ headerCheck = false; }
+    }
+
+    chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+        let color = true;
+        if(!tabs[0].url.includes("youtube.com") || settings.get("Power").on == false){
+            color = false;
+        }
+        addTextAnimation(shortsElement, color, shortsCheck)
+        addTextAnimation(communityElement, color, communityCheck)
+        addTextAnimation(sidebarElement, color, sidebarCheck)
+        addTextAnimation(headerElement, color, headerCheck)
+    });
 }
 
 function textCheck(){
@@ -90,6 +139,8 @@ function textCheck(){
             } catch{}
             updateText("Currently Blocking")
         }
+
+        checkmarkCheck()
     });
 }
 
