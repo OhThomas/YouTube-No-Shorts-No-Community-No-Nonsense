@@ -11,7 +11,7 @@ var communityIO =       { on: 'true', listener: [node], className: ['style-scope
 var breakingNewsIO =    { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Breaking News', innerHTML: 'Breaking news', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByInnerHTML, restoreFunction: restoreByInnerHTML  }
 var communityTrendingIO={ on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Community Trending', innerHTML: 'Trending', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByInnerHTML, restoreFunction: restoreByInnerHTML  }
 var sidebarExtendedIO=  { on: 'true', listener: [node], className: ['ytd-app'], name: 'Sidebar Extended', drawerID: 'guide', buttonID: 'guide-button', removeAttributes: ['guide-persistent-and-visible','opened','mini-guide-visible'], observerFunction: waitForObserver, outerHTML: 'ytd-mini-guide-renderer', id: 'contentContainer', waitFunction: waitForSidebarExtended, deleteFunction: removeSidebarExtended, restoreFunction: restoreSidebarExtended }
-var sidebarMiniIO=      { on: 'true', listener: [node], className: ['ytd-mini-guide-renderer'], listenerID: ['content'], name: 'Sidebar Mini', removeAttributes: ['mini-guide-visible'], observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeClassDisplay, restoreFunction: restoreClassDisplay }
+var sidebarMiniIO=      { on: 'true', listener: [node], className: ['ytd-mini-guide-renderer'], listenerID: ['content'], name: 'Sidebar Mini', removeAttributes: ['mini-guide-visible'], checkAttributes: ['guide-persistent-and-visible'], observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeClassDisplay, restoreFunction: restoreClassDisplay }
 var headerTopicsIO =    { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], listenerID: ['content','content'], name: 'Header Topics', innerHTML: '', id: 'header', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeHeader, restoreFunction: restoreHeader }
 var headerNotificationIO={ on: 'true', listener: [node], className: ['ytd-notification-topbar-button-renderer'], listenerID: ['buttons'], name: 'Header Notification', innerHTML: '', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByName, restoreFunction: restoreByName }
 var headerUploadIO      ={ on: 'true', listener: [node], className: ['ytd-topbar-menu-button-renderer'], listenerID: ['buttons'], name: 'Header Upload', innerHTML: '', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByName, restoreFunction: restoreByName }
@@ -253,7 +253,7 @@ function restoreClassDisplay(IO){
             elements[elem].classList.remove(emptyDSC)
             // Add mini-guide-visible attribute from ytd-app element
             let ytd = document.getElementById("content").parentNode
-            ytd.setAttribute(IO.removeAttributes[0],"")
+            if(!ytd.hasAttribute(IO.checkAttributes[0])){ ytd.setAttribute(IO.removeAttributes[0],"") }
             return true;
         }
     }

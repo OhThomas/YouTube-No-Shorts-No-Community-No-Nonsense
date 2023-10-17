@@ -3,19 +3,19 @@ let red = "#FF4968"; let green = "#0BF01E"; let black = "#000000";
 const settings = new Map()
 const emptyDSC = "emptyDSC"
 
-var powerIO = { on: 'true', name: 'Power'}
-var shortsIO = { on: 'true', name: 'Shorts', section: 'Shorts'}
-var shortsVideosIO = { on: 'true', name: 'Shorts Videos', section: 'Shorts'}
-var shortsSidebarIO = { on: 'true', name: 'Shorts Sidebar', section: 'Shorts'}
-var communityIO = { on: 'true', name: 'Community', section: 'Community'}
-var breakingNewsIO = { on: 'true', name: 'Breaking News', section: 'Community'}
-var communityTrendingIO = { on: 'true', name: 'Community Trending', section: 'Community'}
-var sidebarExtendedIO = { on: 'true', name: 'Sidebar Extended', section: 'Sidebar'}
-var sidebarMiniIO = { on: 'true', name: 'Sidebar Mini', section: 'Sidebar'}
-var headerTopicsIO = { on: 'true', name: 'Header Topics', section: 'Header'}
-var headerNotificationIO = { on: 'true', name: 'Header Notification', section: 'Header'}
-var headerUploadIO = { on: 'true', name: 'Header Upload', section: 'Header'}
-var headerVoiceIO = { on: 'true', name: 'Header Voice', section: 'Header'}
+var powerIO =               { on: 'true', name: 'Power'}
+var shortsIO =              { on: 'true', name: 'Shorts', section: 'Shorts'}
+var shortsVideosIO =        { on: 'true', name: 'Shorts Videos', section: 'Shorts'}
+var shortsSidebarIO =       { on: 'true', name: 'Shorts Sidebar', section: 'Shorts'}
+var communityIO =           { on: 'true', name: 'Community', section: 'Community'}
+var breakingNewsIO =        { on: 'true', name: 'Breaking News', section: 'Community'}
+var communityTrendingIO =   { on: 'true', name: 'Community Trending', section: 'Community'}
+var sidebarExtendedIO =     { on: 'true', name: 'Sidebar Extended', section: 'Sidebar'}
+var sidebarMiniIO =         { on: 'true', name: 'Sidebar Mini', section: 'Sidebar'}
+var headerTopicsIO =        { on: 'true', name: 'Header Topics', section: 'Header'}
+var headerNotificationIO =  { on: 'true', name: 'Header Notification', section: 'Header'}
+var headerUploadIO =        { on: 'true', name: 'Header Upload', section: 'Header'}
+var headerVoiceIO =         { on: 'true', name: 'Header Voice', section: 'Header'}
 
 settings.set("Power",powerIO)
 settings.set("Shorts",shortsIO)
