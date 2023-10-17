@@ -9,6 +9,7 @@ var shortsVideosIO = { on: 'true', name: 'Shorts Videos', section: 'Shorts'}
 var shortsSidebarIO = { on: 'true', name: 'Shorts Sidebar', section: 'Shorts'}
 var communityIO = { on: 'true', name: 'Community', section: 'Community'}
 var breakingNewsIO = { on: 'true', name: 'Breaking News', section: 'Community'}
+var communityTrendingIO = { on: 'true', name: 'Community Trending', section: 'Community'}
 var sidebarExtendedIO = { on: 'true', name: 'Sidebar Extended', section: 'Sidebar'}
 var sidebarMiniIO = { on: 'true', name: 'Sidebar Mini', section: 'Sidebar'}
 var headerTopicsIO = { on: 'true', name: 'Header Topics', section: 'Header'}
@@ -22,6 +23,7 @@ settings.set("Shorts Videos",shortsVideosIO)
 settings.set("Shorts Sidebar",shortsSidebarIO)
 settings.set("Community",communityIO)
 settings.set("Breaking News",breakingNewsIO)
+settings.set("Community Trending",communityTrendingIO)
 settings.set("Sidebar Extended",sidebarExtendedIO)
 settings.set("Sidebar Mini",sidebarMiniIO)
 settings.set("Header Topics",headerTopicsIO)

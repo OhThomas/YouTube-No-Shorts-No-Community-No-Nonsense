@@ -9,6 +9,7 @@ var shortsVideosIO =    { on: 'true', listener: [node], className: ['yt-simple-e
 var shortsSidebarIO =   { on: 'true', listener: [node,node], className: ['yt-simple-endpoint style-scope ytd-mini-guide-entry-renderer','yt-simple-endpoint style-scope ytd-guide-entry-renderer'], listenerID: ['content','sections'], name: 'Shorts Sidebar', innerHTML: '', title: 'Shorts', id: 'endpoint', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByTitle, restoreFunction: restoreByTitle }
 var communityIO =       { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Community', innerHTML: 'Latest YouTube posts', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByInnerHTML, restoreFunction: restoreByInnerHTML }
 var breakingNewsIO =    { on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Breaking News', innerHTML: 'Breaking news', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByInnerHTML, restoreFunction: restoreByInnerHTML  }
+var communityTrendingIO={ on: 'true', listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Community Trending', innerHTML: 'Trending', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeByInnerHTML, restoreFunction: restoreByInnerHTML  }
 var sidebarExtendedIO=  { on: 'true', listener: [node], className: ['ytd-app'], name: 'Sidebar Extended', drawerID: 'guide', buttonID: 'guide-button', removeAttributes: ['guide-persistent-and-visible','opened','mini-guide-visible'], observerFunction: waitForObserver, outerHTML: 'ytd-mini-guide-renderer', id: 'contentContainer', waitFunction: waitForSidebarExtended, deleteFunction: removeSidebarExtended, restoreFunction: restoreSidebarExtended }
 var sidebarMiniIO=      { on: 'true', listener: [node], className: ['ytd-mini-guide-renderer'], listenerID: ['content'], name: 'Sidebar Mini', removeAttributes: ['mini-guide-visible'], observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeClassDisplay, restoreFunction: restoreClassDisplay }
 var headerTopicsIO =    { on: 'true', listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], listenerID: ['content','content'], name: 'Header Topics', innerHTML: '', id: 'header', observerFunction: waitForObserverID, waitFunction: waitForMut, deleteFunction: removeHeader, restoreFunction: restoreHeader }
@@ -22,6 +23,7 @@ settings.set("shortsVideosIO",shortsVideosIO)
 settings.set("shortsSidebarIO",shortsSidebarIO)
 settings.set("communityIO",communityIO)
 settings.set("breakingNewsIO",breakingNewsIO)
+settings.set("communityTrendingIO",communityTrendingIO)
 settings.set("sidebarExtendedIO",sidebarExtendedIO)
 settings.set("sidebarMiniIO",sidebarMiniIO)
 settings.set("headerTopicsIO",headerTopicsIO)
