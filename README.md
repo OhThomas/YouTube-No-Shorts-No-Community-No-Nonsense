@@ -3,7 +3,7 @@
 &nbsp;
 
 <p align="center">
-Chrome extension that lets the user block different sections from YouTube like the shorts, community, breaking news, and more.
+Browser extension that lets the user block different sections from YouTube like the shorts, community, breaking news, and more.
 </p>
 
 &nbsp;
@@ -15,5 +15,9 @@ Chrome extension that lets the user block different sections from YouTube like t
 &nbsp;
 
 <p align="center">
-Download available <a href="https://chrome.google.com/webstore/detail/youtube-no-shorts-no-comm/ailbpknjjkdokgecbhhdcmgponjnkaon">here</a>
+<img src="./images/browsers/chromium16.png">
+Chrome download available <a href="https://chrome.google.com/webstore/detail/youtube-no-shorts-no-comm/ailbpknjjkdokgecbhhdcmgponjnkaon">here</a>
+<br>
+<img src="./images/browsers/firefox16.png">
+Firefox download available <a href="https://addons.mozilla.org/en-US/firefox/addon/youtube-no-shorts-no-community/">here</a>
 </p>
