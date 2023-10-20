@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "YouTube: No Shorts, No Community, No Nonsense",
     "description": "Disables different sections for a more enjoyable experience.",
-    "version": "0.6653",
+    "version": "0.6654",
     "author": "Oh Thomas",
 
     "action": {

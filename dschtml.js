@@ -3,19 +3,22 @@ let red = "#FF4968"; let green = "#0BF01E"; let black = "#000000";
 const settings = new Map()
 const emptyDSC = "emptyDSC"
 
-var powerIO =               { on: 'true', name: 'Power'}
-var shortsIO =              { on: 'true', name: 'Shorts', section: 'Shorts'}
-var shortsVideosIO =        { on: 'true', name: 'Shorts Videos', section: 'Shorts'}
-var shortsSidebarIO =       { on: 'true', name: 'Shorts Sidebar', section: 'Shorts'}
-var communityIO =           { on: 'true', name: 'Community', section: 'Community'}
-var breakingNewsIO =        { on: 'true', name: 'Breaking News', section: 'Community'}
-var communityTrendingIO =   { on: 'true', name: 'Community Trending', section: 'Community'}
-var sidebarExtendedIO =     { on: 'true', name: 'Sidebar Extended', section: 'Sidebar'}
-var sidebarMiniIO =         { on: 'true', name: 'Sidebar Mini', section: 'Sidebar'}
-var headerTopicsIO =        { on: 'true', name: 'Header Topics', section: 'Header'}
-var headerNotificationIO =  { on: 'true', name: 'Header Notification', section: 'Header'}
-var headerUploadIO =        { on: 'true', name: 'Header Upload', section: 'Header'}
-var headerVoiceIO =         { on: 'true', name: 'Header Voice', section: 'Header'}
+var powerIO =               { on: true, name: 'Power'}
+var shortsIO =              { on: true, name: 'Shorts', section: 'Shorts'}
+var shortsVideosIO =        { on: true, name: 'Shorts Videos', section: 'Shorts'}
+var shortsSidebarIO =       { on: true, name: 'Shorts Sidebar', section: 'Shorts'}
+var communityIO =           { on: true, name: 'Community', section: 'Community'}
+var breakingNewsIO =        { on: true, name: 'Breaking News', section: 'Community'}
+var communityTrendingIO =   { on: true, name: 'Community Trending', section: 'Community'}
+var sidebarExtendedIO =     { on: true, name: 'Sidebar Extended', section: 'Sidebar'}
+var sidebarMiniIO =         { on: true, name: 'Sidebar Mini', section: 'Sidebar'}
+var headerTopicsIO =        { on: true, name: 'Header Topics', section: 'Header'}
+var headerNotificationIO =  { on: true, name: 'Header Notification', section: 'Header'}
+var headerUploadIO =        { on: true, name: 'Header Upload', section: 'Header'}
+var headerVoiceIO =         { on: true, name: 'Header Voice', section: 'Header'}
+var moviesSectionsIO =      { on: true, name: 'Movies Sections', section: 'Movies'}
+var moviesBuyIO =           { on: true, name: 'Movies Buy', section: 'Movies'}
+var moviesFreeIO =          { on: false, name: 'Movies Free', section: 'Movies'}
 
 settings.set("Power",powerIO)
 settings.set("Shorts",shortsIO)
@@ -30,6 +33,9 @@ settings.set("Header Topics",headerTopicsIO)
 settings.set("Header Notification",headerNotificationIO)
 settings.set("Header Upload",headerUploadIO)
 settings.set("Header Voice",headerVoiceIO)
+settings.set("Movies Sections",moviesSectionsIO)
+settings.set("Movies Buy",moviesBuyIO)
+settings.set("Movies Free",moviesFreeIO)
 
 async function getStorage(key){
     var storage = await chrome.storage.local.get(key).then((result) => { return result[key] });
@@ -79,14 +85,16 @@ function checkmarkCheck(){
     const communityElement = document.getElementById("communityCheckmark");
     const sidebarElement = document.getElementById("sidebarCheckmark");
     const headerElement = document.getElementById("headerCheckmark");
+    const moviesElement = document.getElementById("moviesCheckmark");
 
-    if(shortsElement == null || communityElement == null || sidebarElement == null || headerElement == null){ return }
+    if(shortsElement == null || communityElement == null || sidebarElement == null || headerElement == null || moviesElement == null){ return }
 
     for (const [key, value] of settings.entries()) {
         if (value.on == false && value.section == 'Shorts'){ shortsCheck = false; }
         if (value.on == false && value.section == 'Community'){ communityCheck = false; }
         if (value.on == false && value.section == 'Sidebar'){ sidebarCheck = false; }
         if (value.on == false && value.section == 'Header'){ headerCheck = false; }
+        if (value.on == false && value.section == 'Movies'){ moviesCheck = false; }
     }
 
     chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
@@ -95,6 +103,7 @@ function checkmarkCheck(){
         addTextAnimation(communityElement, color, communityCheck)
         addTextAnimation(sidebarElement, color, sidebarCheck)
         addTextAnimation(headerElement, color, headerCheck)
+        addTextAnimation(moviesElement, color, moviesCheck)
     });
 }
 
@@ -144,7 +153,7 @@ function textCheck(){
 }
 
 async function clickBuilder(setting){
-    setting.on = (await getStorage(setting.name) != null) ? await getStorage(setting.name) : true
+    setting.on = (await getStorage(setting.name) != null) ? await getStorage(setting.name) : setting.on
     
     document.getElementById(setting.name).checked = setting.on // loading stored settings
     document.getElementById(setting.name).onclick = async function(button){
