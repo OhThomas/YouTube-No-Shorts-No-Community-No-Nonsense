@@ -238,7 +238,7 @@ function restoreMovies(IO,i){
     let elements = document.getElementsByClassName(IO.className[i])
     for (elem in elements){
         if(elements[elem].innerHTML && elements[elem].innerHTML.match(IO.innerHTML) && elements[elem].classList.contains(emptyDSC)){
-            console.log("Removing empty class from" + IO.name)
+            console.log("Removing empty class from " + IO.name)
             for(let i = 0; i < IO.higherClasses.length; i++){
                 let higher = elements[elem].closest(IO.higherClasses[i])
                 if(higher != null) { higher.classList.remove(emptyDSC); break; }
@@ -252,7 +252,7 @@ function restoreMoviesBuy(IO,i){
     let elements = document.getElementsByClassName(IO.className[i])
     for (elem in elements){
         if(elements[elem].innerHTML && !elements[elem].innerHTML.match(IO.innerHTML) && elements[elem].classList.contains(emptyDSC)){
-            console.log("Removing empty class from" + IO.name)
+            console.log("Removing empty class from " + IO.name)
             for(let i = 0; i < IO.higherClasses.length; i++){
                 let higher = elements[elem].closest(IO.higherClasses[i])
                 if(higher != null) { higher.classList.remove(emptyDSC); break; }
@@ -266,7 +266,7 @@ function restoreMoviesByRating(IO,i){
     let elements = document.getElementsByClassName(IO.className[i])
     for (elem in elements){
         if(elements[elem].parentNode && elements[elem].parentNode.children[0] && elements[elem].parentNode.children[0].classList == elements[elem].classList && !elements[elem].classList.contains(emptyDSC)){
-            console.log("Removing empty class from" + IO.name)
+            console.log("Removing empty class from " + IO.name)
             for(let i = 0; i < IO.higherClasses.length; i++){
                 let higher = elements[elem].closest(IO.higherClasses[i])
                 if(higher != null) { higher.classList.remove(emptyDSC); break; }
@@ -280,7 +280,7 @@ function restoreByClassTitle(IO,i){
     let elements = document.getElementsByClassName(IO.className[i])
     for (elem in elements){
         if(elements[elem].title && elements[elem].classList.contains(emptyDSC)){
-            console.log("Removing empty class from" + IO.name)
+            console.log("Removing empty class from " + IO.name)
             let closestElem = elements[elem].closest(IO.higherClasses[i])
             if(closestElem && closestElem.classList) { closestElem.classList.remove(emptyDSC) }
             elements[elem].classList.remove(emptyDSC)
