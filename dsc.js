@@ -13,9 +13,21 @@ var communityTrendingIO={ on: true, listener: [node], className: ['style-scope y
 var sidebarExtendedIO=  { on: true, listener: [node], className: ['ytd-app'], name: 'Sidebar Extended', drawerID: 'guide', buttonID: 'guide-button', removeAttributes: ['guide-persistent-and-visible','opened','mini-guide-visible'], outerHTML: 'ytd-mini-guide-renderer', id: 'contentContainer', observerFunction: [waitForObserver], waitFunction: waitForSidebarExtended, deleteFunction: [removeSidebarExtended], restoreFunction: [restoreSidebarExtended] }
 var sidebarMiniIO=      { on: true, listener: [node], className: ['ytd-mini-guide-renderer'], listenerID: ['content'], name: 'Sidebar Mini', removeAttributes: ['mini-guide-visible'], checkAttributes: ['guide-persistent-and-visible'], observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeClassDisplay], restoreFunction: [restoreClassDisplay] }
 var headerTopicsIO =    { on: true, listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], listenerID: ['content','content'], name: 'Header Topics', innerHTML: '', id: 'header', observerFunction: [waitForObserverID,waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeHeader,removeHeader], restoreFunction: [restoreHeader,restoreHeader] }
+var headerRelatedIO     ={ on: true, listener: [node], className: ['yt-related-chip-cloud-renderer'], listenerID: ['content'], name: 'Header Related', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
 var headerNotificationIO={ on: true, listener: [node], className: ['ytd-notification-topbar-button-renderer'], listenerID: ['buttons'], name: 'Header Notification', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
 var headerUploadIO      ={ on: true, listener: [node], className: ['ytd-topbar-menu-button-renderer'], listenerID: ['buttons'], name: 'Header Upload', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
 var headerVoiceIO       ={ on: true, listener: [node], className: ['voice-search-button'], listenerID: ['center'], id: 'voice-search-button', name: 'Header Voice', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByID], restoreFunction: [restoreByID] }
+var descrDownloadIO     ={ on: true, listener: [node], className: ['ytd-download-button-renderer'], listenerID: ['content'], name: 'Description Download', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
+var descShareIO         ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Share', name: 'Description Share', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
+var descClipIO          ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Clip', name: 'Description Clip', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var descPlaylistIO      ={ on: false, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Save to playlist', name: 'Description Playlist', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var descPopupIO         ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-button'], ariaLabel: 'More actions', listenerID: ['content'], name: 'Description Popup', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var descThanksIO        ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], ariaLabel: 'Thanks', listenerID: ['content'], name: 'Description Thanks', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
+var descJoinIO          ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--outline yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m'], ariaLabel: 'Join this channel', listenerID: ['content'], name: 'Description Join', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
+var descOfferIO         ={ on: true, listener: [node], className: ['offer'], listenerID: ['content'], id: 'offer-module', name: 'Description Offer', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByID], restoreFunction: [restoreByID] }
+var descLikeIO          ={ on: false, listener: [node], className: ['ytd-segmented-like-dislike-button-renderer'], listenerID: ['content'], name: 'Description Like', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
+var descMetadataIO      ={ on: true, listener: [node], className: ['ytd-metadata-row-container-renderer'], listenerID: ['content'], id: 'offer-module', name: 'Description Metadata', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByNameAll], restoreFunction: [restoreByNameAll] }
+var descBoxIO           ={ on: false, listener: [node], className: ['box'], listenerID: ['content','content'], id: 'description-inner', name: 'Description Box', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByIDParent], restoreFunction: [restoreByIDParent]}
 var moviesSectionsIO    ={ on: true, listener: [node], className: ['yt-simple-endpoint style-scope ytd-rich-shelf-renderer'], higherClasses: ['ytd-rich-section-renderer'], listenerID: ['center'], name: 'Movies Sections', title: 'Free Primetime movies', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByClassTitle], restoreFunction: [restoreByClassTitle] }
 var moviesBuyIO         ={ on: true, listener: [node], className: ['badge badge-style-type-ypc style-scope ytd-badge-supported-renderer style-scope ytd-badge-supported-renderer'], higherClasses: ['ytd-rich-item-renderer','ytd-grid-movie-renderer','ytd-grid-show-renderer','ytd-grid-video-renderer'], listenerID: ['content'], name: 'Movies Buy', innerHTML: 'Free with ads', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeMoviesBuy], restoreFunction: [restoreMoviesBuy] }
 var moviesFreeIO        ={ on: false, listener: [node,node], className: ['badge badge-style-type-ypc style-scope ytd-badge-supported-renderer style-scope ytd-badge-supported-renderer','badge badge-style-type-simple style-scope ytd-badge-supported-renderer style-scope ytd-badge-supported-renderer'], higherClasses: ['ytd-rich-item-renderer','ytd-grid-movie-renderer','ytd-grid-show-renderer','ytd-grid-video-renderer'], listenerID: ['content','content'], name: 'Movies Free', innerHTML: 'Free with ads', observerFunction: [waitForObserverID,waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeMovies,removeMoviesByRating], restoreFunction: [restoreMovies,restoreMoviesByRating] }
@@ -30,9 +42,21 @@ settings.set("communityTrendingIO",communityTrendingIO)
 settings.set("sidebarExtendedIO",sidebarExtendedIO)
 settings.set("sidebarMiniIO",sidebarMiniIO)
 settings.set("headerTopicsIO",headerTopicsIO)
+settings.set("headerRelatedIO",headerRelatedIO)
 settings.set("headerNotificationIO",headerNotificationIO)
 settings.set("headerUploadIO",headerUploadIO)
 settings.set("headerVoiceIO",headerVoiceIO)
+settings.set("descrDownloadIO",descrDownloadIO)
+settings.set("descrShareIO",descShareIO)
+settings.set("descrClipIO",descClipIO)
+settings.set("descPlaylistIO",descPlaylistIO)
+settings.set("descPopupIO",descPopupIO)
+settings.set("descThanksIO",descThanksIO)
+settings.set("descJoinIO",descJoinIO)
+settings.set("descOfferIO",descOfferIO)
+settings.set("descLikeIO",descLikeIO)
+settings.set("descMetadataIO",descMetadataIO)
+settings.set("descBoxIO",descBoxIO)
 settings.set("moviesSectionsIO",moviesSectionsIO)
 settings.set("moviesBuyIO",moviesBuyIO)
 settings.set("moviesFreeIO",moviesFreeIO)
@@ -172,12 +196,46 @@ function removeByName(IO, className){
     }
 }
 
+function removeByNameAll(IO, className){
+    let elements = document.getElementsByTagName(className)
+    let ret = false;
+    for(element in elements){
+        if(elements[element].classList && !elements[element].classList.contains(emptyDSC)){
+            console.log("Removing "+ IO.name + " at " + className)
+            elements[element].classList.add(emptyDSC)
+            ret = true;
+        }
+    }
+    return ret;
+}
+
 function removeByID(IO, className){
     let element = document.getElementById(IO.id)
     if(element && !element.classList.contains(emptyDSC)){
         console.log("Removing "+ IO.name + " at " + className)
         element.classList.add(emptyDSC)
         return true;
+    }
+}
+
+function removeByIDParent(IO, className){
+    let element = document.getElementById(IO.id)
+    if(element && element.parentNode && !element.parentNode.classList.contains(emptyDSC)){
+        console.log("Removing "+ IO.name + " at " + className)
+        element.parentNode.classList.add(emptyDSC)
+        return true;
+    }
+}
+
+function removeByAriaLabel(IO, className){
+    let elements = document.getElementsByClassName(className)
+    for(let elem in elements){
+        if(elements[elem].ariaLabel && elements[elem].ariaLabel == IO.ariaLabel &&
+            elements[elem].classList && !elements[elem].classList.contains(emptyDSC)){
+            console.log("Removing "+ IO.name + " at " + className)
+            elements[elem].classList.add(emptyDSC)
+            return true;
+        }
     }
 }
 
@@ -329,11 +387,40 @@ function restoreByName(IO,i){
     }
 }
 
+function restoreByNameAll(IO,i){
+    let elements = document.getElementsByTagName(IO.className[i])
+    for(let element in elements){
+        if(elements[element].classList && elements[element].classList.contains(emptyDSC)){
+            console.log("Removing empty class from "+IO.className[i])
+            elements[element].classList.remove(emptyDSC)
+        }
+    }
+}
+
 function restoreByID(IO,i){
     let element = document.getElementById(IO.id)
     if (element && element.classList.contains(emptyDSC)){
         console.log("Removing empty class from "+IO.name)
         element.classList.remove(emptyDSC)
+    }
+}
+
+function restoreByIDParent(IO,i){
+    let element = document.getElementById(IO.id)
+    if (element && element.parentNode && element.parentNode.classList.contains(emptyDSC)){
+        console.log("Removing empty class from "+IO.name)
+        element.parentNode.classList.remove(emptyDSC)
+    }
+}
+
+function restoreByAriaLabel(IO, i){
+    let elements = document.getElementsByClassName(IO.className[i])
+    for(let elem in elements){
+        if(elements[elem].ariaLabel && elements[elem].ariaLabel == IO.ariaLabel &&
+            elements[elem].classList && elements[elem].classList.contains(emptyDSC)){
+            console.log("Removing empty class from "+IO.name)
+            elements[elem].classList.remove(emptyDSC)
+        }
     }
 }
 
@@ -493,6 +580,7 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
             if(key == "Power"){ deleteIO() }
             else if(settings.get("powerIO").on == true){
                 for (const [key2, value] of settings.entries()) {
+                    value.on = newValue
                     if(value.name == key){ value.waitFunction(value) }
                 }
             }
@@ -503,7 +591,7 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
                 for (const [key2, value] of settings.entries()) {
                     if(value.name == key){ 
                         for(let i = 0; i < value.restoreFunction.length; i++){ value.restoreFunction[i](value,i) } 
-                     }
+                    }
                 }
             }
         }

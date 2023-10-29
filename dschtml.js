@@ -13,9 +13,21 @@ var communityTrendingIO =   { on: true, name: 'Community Trending', section: 'Co
 var sidebarExtendedIO =     { on: true, name: 'Sidebar Extended', section: 'Sidebar'}
 var sidebarMiniIO =         { on: true, name: 'Sidebar Mini', section: 'Sidebar'}
 var headerTopicsIO =        { on: true, name: 'Header Topics', section: 'Header'}
+var headerRelatedIO =       { on: true, name: 'Header Related', section: 'Header'}
 var headerNotificationIO =  { on: true, name: 'Header Notification', section: 'Header'}
 var headerUploadIO =        { on: true, name: 'Header Upload', section: 'Header'}
 var headerVoiceIO =         { on: true, name: 'Header Voice', section: 'Header'}
+var descDownloadIO =        { on: true, name: 'Description Download', section: 'Description'}
+var descShareIO =           { on: true, name: 'Description Share', section: 'Description'}
+var descClipIO =            { on: true, name: 'Description Clip', section: 'Description'}
+var descPlaylistIO =        { on: false, name: 'Description Playlist', section: 'Description'}
+var descPopupIO =           { on: true, name: 'Description Popup', section: 'Description'}
+var descThanksIO =          { on: true, name: 'Description Thanks', section: 'Description'}
+var descJoinIO =            { on: true, name: 'Description Join', section: 'Description'}
+var descOfferIO =           { on: true, name: 'Description Offer', section: 'Description'}
+var descLikeIO =            { on: false, name: 'Description Like', section: 'Description'}
+var descMetadataIO =        { on: true, name: 'Description Metadata', section: 'Description'}
+var descBoxIO =             { on: false, name: 'Description Box', section: 'Description'}
 var moviesSectionsIO =      { on: true, name: 'Movies Sections', section: 'Movies'}
 var moviesBuyIO =           { on: true, name: 'Movies Buy', section: 'Movies'}
 var moviesFreeIO =          { on: false, name: 'Movies Free', section: 'Movies'}
@@ -30,9 +42,21 @@ settings.set("Community Trending",communityTrendingIO)
 settings.set("Sidebar Extended",sidebarExtendedIO)
 settings.set("Sidebar Mini",sidebarMiniIO)
 settings.set("Header Topics",headerTopicsIO)
+settings.set("Header Related",headerRelatedIO)
 settings.set("Header Notification",headerNotificationIO)
 settings.set("Header Upload",headerUploadIO)
 settings.set("Header Voice",headerVoiceIO)
+settings.set("Description Download",descDownloadIO)
+settings.set("Description Share",descShareIO)
+settings.set("Description Clip",descClipIO)
+settings.set("Description Playlist",descPlaylistIO)
+settings.set("Description Popup",descPopupIO)
+settings.set("Description Thanks",descThanksIO)
+settings.set("Description Join",descJoinIO)
+settings.set("Description Offer",descOfferIO)
+settings.set("Description Like",descLikeIO)
+settings.set("Description Metadata",descMetadataIO)
+settings.set("Description Box",descBoxIO)
 settings.set("Movies Sections",moviesSectionsIO)
 settings.set("Movies Buy",moviesBuyIO)
 settings.set("Movies Free",moviesFreeIO)
@@ -80,20 +104,23 @@ function addTextAnimation(element, color, display){
 }
 
 function checkmarkCheck(){
-    let shortsCheck = true; communityCheck = true; sidebarCheck = true; headerCheck = true;
+    let shortsCheck = true; communityCheck = true; sidebarCheck = true;  descriptionCheck = true; headerCheck = true;
     const shortsElement = document.getElementById("shortsCheckmark");
     const communityElement = document.getElementById("communityCheckmark");
     const sidebarElement = document.getElementById("sidebarCheckmark");
     const headerElement = document.getElementById("headerCheckmark");
+    const descriptionElement = document.getElementById("descriptionCheckmark");
     const moviesElement = document.getElementById("moviesCheckmark");
 
-    if(shortsElement == null || communityElement == null || sidebarElement == null || headerElement == null || moviesElement == null){ return }
+    if(shortsElement == null || communityElement == null || sidebarElement == null || 
+        headerElement == null || descriptionElement == null || moviesElement == null){ return }
 
     for (const [key, value] of settings.entries()) {
         if (value.on == false && value.section == 'Shorts'){ shortsCheck = false; }
         if (value.on == false && value.section == 'Community'){ communityCheck = false; }
         if (value.on == false && value.section == 'Sidebar'){ sidebarCheck = false; }
         if (value.on == false && value.section == 'Header'){ headerCheck = false; }
+        if (value.on == false && value.section == 'Description'){ descriptionCheck = false; }
         if (value.on == false && value.section == 'Movies'){ moviesCheck = false; }
     }
 
@@ -103,6 +130,7 @@ function checkmarkCheck(){
         addTextAnimation(communityElement, color, communityCheck)
         addTextAnimation(sidebarElement, color, sidebarCheck)
         addTextAnimation(headerElement, color, headerCheck)
+        addTextAnimation(descriptionElement, color, descriptionCheck)
         addTextAnimation(moviesElement, color, moviesCheck)
     });
 }
