@@ -17,14 +17,16 @@ var headerRelatedIO     ={ on: true, listener: [node], className: ['yt-related-c
 var headerNotificationIO={ on: true, listener: [node], className: ['ytd-notification-topbar-button-renderer'], listenerID: ['buttons'], name: 'Header Notification', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
 var headerUploadIO      ={ on: true, listener: [node], className: ['ytd-topbar-menu-button-renderer'], listenerID: ['buttons'], name: 'Header Upload', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
 var headerVoiceIO       ={ on: true, listener: [node], className: ['voice-search-button'], listenerID: ['center'], id: 'voice-search-button', name: 'Header Voice', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByID], restoreFunction: [restoreByID] }
-var descrDownloadIO     ={ on: true, listener: [node], className: ['ytd-download-button-renderer'], listenerID: ['content'], name: 'Description Download', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
-var descShareIO         ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Share', name: 'Description Share', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
-var descClipIO          ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Clip', name: 'Description Clip', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
-var descPlaylistIO      ={ on: false, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Save to playlist', name: 'Description Playlist', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
-var descPopupIO         ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-button'], ariaLabel: 'More actions', listenerID: ['content'], name: 'Description Popup', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
-var descThanksIO        ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], ariaLabel: 'Thanks', listenerID: ['content'], name: 'Description Thanks', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
-var descJoinIO          ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--outline yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m'], ariaLabel: 'Join this channel', listenerID: ['content'], name: 'Description Join', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
+var descDownloadIO      ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Download', parentCount: 3, name: 'Description Download', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var descShareIO         ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Share', parentCount: 2, name: 'Description Share', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
+var descClipIO          ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Clip', parentCount: 2, name: 'Description Clip', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var descPlaylistIO      ={ on: false, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Save to playlist', parentCount: 2, name: 'Description Playlist', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var descPopupIO         ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-button'], ariaLabel: 'More actions', parentCount: 1, listenerID: ['content'], name: 'Description Popup', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var descThanksIO        ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], ariaLabel: 'Thanks', parentCount: 2, listenerID: ['content'], name: 'Description Thanks', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
+var descJoinIO          ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--outline yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m'], ariaLabel: 'Join this channel', parentCount: 3, listenerID: ['content'], name: 'Description Join', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
 var descOfferIO         ={ on: true, listener: [node], className: ['offer'], listenerID: ['content'], id: 'offer-module', name: 'Description Offer', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByID], restoreFunction: [restoreByID] }
+var descTryIO           ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--filled yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m'], ariaLabel: 'Try it for free', parentCount: 3, listenerID: ['content'], name: 'Description Try', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
+var descMerchIO         ={ on: true, listener: [node], className: ['ytd-merch-shelf-renderer'], listenerID: ['content'], name: 'Description Merch', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByName], restoreFunction: [restoreByName]  }
 var descLikeIO          ={ on: false, listener: [node], className: ['ytd-segmented-like-dislike-button-renderer'], listenerID: ['content'], name: 'Description Like', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
 var descMetadataIO      ={ on: true, listener: [node], className: ['ytd-metadata-row-container-renderer'], listenerID: ['content'], id: 'offer-module', name: 'Description Metadata', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByNameAll], restoreFunction: [restoreByNameAll] }
 var descBoxIO           ={ on: false, listener: [node], className: ['box'], listenerID: ['content','content'], id: 'description-inner', name: 'Description Box', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByIDParent], restoreFunction: [restoreByIDParent]}
@@ -46,14 +48,16 @@ settings.set("headerRelatedIO",headerRelatedIO)
 settings.set("headerNotificationIO",headerNotificationIO)
 settings.set("headerUploadIO",headerUploadIO)
 settings.set("headerVoiceIO",headerVoiceIO)
-settings.set("descrDownloadIO",descrDownloadIO)
-settings.set("descrShareIO",descShareIO)
-settings.set("descrClipIO",descClipIO)
+settings.set("descDownloadIO",descDownloadIO)
+settings.set("descShareIO",descShareIO)
+settings.set("descClipIO",descClipIO)
 settings.set("descPlaylistIO",descPlaylistIO)
 settings.set("descPopupIO",descPopupIO)
 settings.set("descThanksIO",descThanksIO)
 settings.set("descJoinIO",descJoinIO)
 settings.set("descOfferIO",descOfferIO)
+settings.set("descTryIO",descTryIO)
+settings.set("descMerchIO",descMerchIO)
 settings.set("descLikeIO",descLikeIO)
 settings.set("descMetadataIO",descMetadataIO)
 settings.set("descBoxIO",descBoxIO)
@@ -70,6 +74,19 @@ async function setStorage(key, value){ await chrome.storage.local.set({[key]: va
 
 async function awaitStorage(IO){
     IO.on = (await getStorage(IO.name) != null) ? await getStorage(IO.name) : IO.on
+}
+
+// Finding proper parent to remove
+function findParentNode(IO,removeElem){
+    if(IO.parentCount){
+        let count = 0
+        while(count < IO.parentCount){
+            if(removeElem && removeElem.parentNode)
+                removeElem = removeElem.parentNode
+            count++
+        }
+    }
+    return removeElem
 }
 
 function removeHeader(IO,className){
@@ -230,11 +247,14 @@ function removeByIDParent(IO, className){
 function removeByAriaLabel(IO, className){
     let elements = document.getElementsByClassName(className)
     for(let elem in elements){
-        if(elements[elem].ariaLabel && elements[elem].ariaLabel == IO.ariaLabel &&
-            elements[elem].classList && !elements[elem].classList.contains(emptyDSC)){
-            console.log("Removing "+ IO.name + " at " + className)
-            elements[elem].classList.add(emptyDSC)
-            return true;
+        if(elements[elem].ariaLabel && elements[elem].ariaLabel == IO.ariaLabel){
+            let removeElem = elements[elem]
+            removeElem = findParentNode(IO,removeElem)
+            if(removeElem.classList && !removeElem.classList.contains(emptyDSC)){
+                console.log("Removing "+ IO.name + " at " + className)
+                removeElem.classList.add(emptyDSC)
+                return true;
+            }
         }
     }
 }
@@ -416,10 +436,13 @@ function restoreByIDParent(IO,i){
 function restoreByAriaLabel(IO, i){
     let elements = document.getElementsByClassName(IO.className[i])
     for(let elem in elements){
-        if(elements[elem].ariaLabel && elements[elem].ariaLabel == IO.ariaLabel &&
-            elements[elem].classList && elements[elem].classList.contains(emptyDSC)){
-            console.log("Removing empty class from "+IO.name)
-            elements[elem].classList.remove(emptyDSC)
+        if(elements[elem].ariaLabel && elements[elem].ariaLabel == IO.ariaLabel){
+            let removeElem = elements[elem]
+            removeElem = findParentNode(IO,removeElem)
+            if(removeElem.classList && removeElem.classList.contains(emptyDSC)){
+                console.log("Removing empty class from "+IO.name)
+                removeElem.classList.remove(emptyDSC)
+            }
         }
     }
 }

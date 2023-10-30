@@ -25,6 +25,8 @@ var descPopupIO =           { on: true, name: 'Description Popup', section: 'Des
 var descThanksIO =          { on: true, name: 'Description Thanks', section: 'Description'}
 var descJoinIO =            { on: true, name: 'Description Join', section: 'Description'}
 var descOfferIO =           { on: true, name: 'Description Offer', section: 'Description'}
+var descTryIO =             { on: true, name: 'Description Try', section: 'Description'}
+var descMerchIO =           { on: true, name: 'Description Merch', section: 'Description'}
 var descLikeIO =            { on: false, name: 'Description Like', section: 'Description'}
 var descMetadataIO =        { on: true, name: 'Description Metadata', section: 'Description'}
 var descBoxIO =             { on: false, name: 'Description Box', section: 'Description'}
@@ -54,6 +56,8 @@ settings.set("Description Popup",descPopupIO)
 settings.set("Description Thanks",descThanksIO)
 settings.set("Description Join",descJoinIO)
 settings.set("Description Offer",descOfferIO)
+settings.set("Description Try",descTryIO)
+settings.set("Description Merch",descMerchIO)
 settings.set("Description Like",descLikeIO)
 settings.set("Description Metadata",descMetadataIO)
 settings.set("Description Box",descBoxIO)
