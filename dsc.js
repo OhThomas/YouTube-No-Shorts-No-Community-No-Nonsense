@@ -17,6 +17,16 @@ var headerRelatedIO     ={ on: true, listener: [node], className: ['yt-related-c
 var headerNotificationIO={ on: true, listener: [node], className: ['ytd-notification-topbar-button-renderer'], listenerID: ['buttons'], name: 'Header Notification', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
 var headerUploadIO      ={ on: true, listener: [node], className: ['ytd-topbar-menu-button-renderer'], listenerID: ['buttons'], name: 'Header Upload', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
 var headerVoiceIO       ={ on: true, listener: [node], className: ['voice-search-button'], listenerID: ['center'], id: 'voice-search-button', name: 'Header Voice', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByID], restoreFunction: [restoreByID] }
+var videoNextIO         ={ on: true, listener: [node], className: ['ytp-next-button ytp-button'], listenerID: ['content'], name: 'Video Next', ariaLabel: 'Next (SHIFT+n)', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var videoAutoplayIO     ={ on: true, listener: [node], className: ['ytp-autonav-toggle-button-container'], listenerID: ['content'], name: 'Video Autoplay', ariaLabel: 'Auto-play is', parentCount: 1, observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeClassAriaLabel], restoreFunction: [restoreClassAriaLabel] }
+var videoSubtitlesIO    ={ on: false, listener: [node], className: ['ytp-subtitles-button ytp-button'], listenerID: ['content'], name: 'Video Subtitles', ariaLabel: 'Subtitles', match: true, observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var videoSettingsIO     ={ on: false, listener: [node], className: ['ytp-button ytp-settings-button'], listenerID: ['content'], name: 'Video Settings', ariaLabel: 'Settings', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var videoMiniplayerIO   ={ on: true, listener: [node], className: ['ytp-miniplayer-button ytp-button'], listenerID: ['content'], name: 'Video Miniplayer', ariaLabel: 'Miniplayer', match: true, observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var videoPictureIO      ={ on: true, listener: [node], className: ['ytp-pip-button ytp-button'], listenerID: ['content'], name: 'Video Picture', ariaLabel: 'Picture in Picture', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var videoCinemaIO       ={ on: false, listener: [node], className: ['ytp-size-button ytp-button'], listenerID: ['content'], name: 'Video Cinema', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByClass], restoreFunction: [restoreByClass] }
+var videoTVIO           ={ on: true, listener: [node], className: ['ytp-remote-button ytp-button'], listenerID: ['content'], name: 'Video TV', ariaLabel: 'Play on TV', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var videoFullscreenIO   ={ on: false, listener: [node], className: ['ytp-fullscreen-button ytp-button'], listenerID: ['content'], name: 'Video Fullscreen', ariaLabel: 'Full screen', match: true, observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByClass], restoreFunction: [restoreByClass] }
+var videoChatIO         ={ on: true, listener: [node], className: ['chat-container'], listenerID: ['content'], name: 'Video Chat', id: 'chat-container', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByID], restoreFunction: [restoreByID] }
 var descDownloadIO      ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Download', parentCount: 3, name: 'Description Download', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
 var descShareIO         ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Share', parentCount: 2, name: 'Description Share', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
 var descClipIO          ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Clip', parentCount: 2, name: 'Description Clip', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
@@ -48,6 +58,16 @@ settings.set("headerRelatedIO",headerRelatedIO)
 settings.set("headerNotificationIO",headerNotificationIO)
 settings.set("headerUploadIO",headerUploadIO)
 settings.set("headerVoiceIO",headerVoiceIO)
+settings.set("videoNextIO",videoNextIO)
+settings.set("videoAutoplayIO",videoAutoplayIO)
+settings.set("videoSubtitlesIO",videoSubtitlesIO)
+settings.set("videoSettingsIO",videoSettingsIO)
+settings.set("videoMiniplayerIO",videoMiniplayerIO)
+settings.set("videoPictureIO",videoPictureIO)
+settings.set("videoCinemaIO",videoCinemaIO)
+settings.set("videoTVIO",videoTVIO)
+settings.set("videoFullscreenIO",videoFullscreenIO)
+settings.set("videoChatIO",videoChatIO)
 settings.set("descDownloadIO",descDownloadIO)
 settings.set("descShareIO",descShareIO)
 settings.set("descClipIO",descClipIO)
@@ -247,7 +267,10 @@ function removeByIDParent(IO, className){
 function removeByAriaLabel(IO, className){
     let elements = document.getElementsByClassName(className)
     for(let elem in elements){
-        if(elements[elem].ariaLabel && elements[elem].ariaLabel == IO.ariaLabel){
+        if(IO.match){ check = elements[elem].ariaLabel && elements[elem].ariaLabel.match(IO.ariaLabel); }
+        else{ check = elements[elem].ariaLabel && elements[elem].ariaLabel == IO.ariaLabel; }
+
+        if(check){
             let removeElem = elements[elem]
             removeElem = findParentNode(IO,removeElem)
             if(removeElem.classList && !removeElem.classList.contains(emptyDSC)){
@@ -284,6 +307,18 @@ function removeAttributeIO(IO, i, element){
     return false;
 }
 
+function removeByClass(IO, className){
+    let element = document.getElementsByClassName(className)[0]
+    if(element){
+        element = findParentNode(IO, element)
+        if(element.classList && !element.classList.contains(emptyDSC)){
+            console.log("Removing "+ IO.name + " at " + className)
+            element.classList.add(emptyDSC)
+            return true;
+        }
+    }
+}
+
 function removeClassDisplay(IO){
     let elements = document.getElementsByClassName(IO.className[0])
     for(elem in elements){
@@ -297,6 +332,19 @@ function removeClassDisplay(IO){
                 removeAttributeIO(IO,0,ytd)
             }
             return true; // deletes element once (remove this so it doesn't prevent space issues)
+        }
+    }
+}
+
+function removeClassAriaLabel(IO, className){
+    let element = document.getElementsByClassName(className)[0]
+    if(element){
+        element = findParentNode(IO, element)
+        if(element.ariaLabel && element.ariaLabel.match(IO.ariaLabel) && 
+        element.classList && !element.classList.contains(emptyDSC)){
+            console.log("Removing "+ IO.name + " at " + className)
+            element.classList.add(emptyDSC)
+            return true;
         }
     }
 }
@@ -436,7 +484,10 @@ function restoreByIDParent(IO,i){
 function restoreByAriaLabel(IO, i){
     let elements = document.getElementsByClassName(IO.className[i])
     for(let elem in elements){
-        if(elements[elem].ariaLabel && elements[elem].ariaLabel == IO.ariaLabel){
+        if(IO.match){ check = elements[elem].ariaLabel && elements[elem].ariaLabel.match(IO.ariaLabel); }
+        else{ check = elements[elem].ariaLabel && elements[elem].ariaLabel == IO.ariaLabel; }
+
+        if(check){
             let removeElem = elements[elem]
             removeElem = findParentNode(IO,removeElem)
             if(removeElem.classList && removeElem.classList.contains(emptyDSC)){
@@ -457,6 +508,17 @@ function restoreSidebarExtended(IO,i){
     if(settings.get("sidebarMiniIO").on == false) { document.getElementsByTagName(IO.className[0])[0].setAttribute(IO.removeAttributes[2],"") }//removeAttributeIO(IO,2,) }
 }
 
+function restoreByClass(IO,i){
+    let element = document.getElementsByClassName(IO.className[i])[0]
+    if(element){
+        element = findParentNode(IO, element)
+        if(element.classList && element.classList.contains(emptyDSC)){
+            console.log("Removing empty class from "+IO.name)
+            element.classList.remove(emptyDSC)
+        }
+    }
+}
+
 function restoreClassDisplay(IO,i){
     let elements = document.getElementsByClassName(IO.className[0])
     for(elem in elements){
@@ -468,6 +530,18 @@ function restoreClassDisplay(IO,i){
             let ytd = document.getElementById("content").parentNode
             if(!ytd.hasAttribute(IO.checkAttributes[0])){ ytd.setAttribute(IO.removeAttributes[0],"") }
             return true;
+        }
+    }
+}
+
+function restoreClassAriaLabel(IO,i){
+    let element = document.getElementsByClassName(IO.className[i])[0]
+    if(element){
+        element = findParentNode(IO, element)
+        if(element.ariaLabel && element.ariaLabel.match(IO.ariaLabel) && 
+        element.classList && element.classList.contains(emptyDSC)){
+            console.log("Removing empty class from "+IO.name)
+            element.classList.remove(emptyDSC)
         }
     }
 }

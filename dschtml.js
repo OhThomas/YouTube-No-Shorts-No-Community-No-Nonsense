@@ -17,6 +17,16 @@ var headerRelatedIO =       { on: true, name: 'Header Related', section: 'Header
 var headerNotificationIO =  { on: true, name: 'Header Notification', section: 'Header'}
 var headerUploadIO =        { on: true, name: 'Header Upload', section: 'Header'}
 var headerVoiceIO =         { on: true, name: 'Header Voice', section: 'Header'}
+var videoNextIO =           { on: true, name: 'Video Next', section: 'Video'}
+var videoAutoplayIO =       { on: true, name: 'Video Autoplay', section: 'Video'}
+var videoSubtitlesIO =      { on: false, name: 'Video Subtitles', section: 'Video'}
+var videoSettingsIO =       { on: false, name: 'Video Settings', section: 'Video'}
+var videoMiniplayerIO =     { on: true, name: 'Video Miniplayer', section: 'Video'}
+var videoPictureIO =        { on: true, name: 'Video Picture', section: 'Video'}
+var videoCinemaIO =         { on: false, name: 'Video Cinema', section: 'Video'}
+var videoTVIO =             { on: true, name: 'Video TV', section: 'Video'}
+var videoFullscreenIO =     { on: false, name: 'Video Fullscreen', section: 'Video'}
+var videoChatIO =           { on: true, name: 'Video Chat', section: 'Video'}
 var descDownloadIO =        { on: true, name: 'Description Download', section: 'Description'}
 var descShareIO =           { on: true, name: 'Description Share', section: 'Description'}
 var descClipIO =            { on: true, name: 'Description Clip', section: 'Description'}
@@ -48,6 +58,16 @@ settings.set("Header Related",headerRelatedIO)
 settings.set("Header Notification",headerNotificationIO)
 settings.set("Header Upload",headerUploadIO)
 settings.set("Header Voice",headerVoiceIO)
+settings.set("Video Next",videoNextIO)
+settings.set("Video Autoplay",videoAutoplayIO)
+settings.set("Video Subtitles",videoSubtitlesIO)
+settings.set("Video Settings",videoSettingsIO)
+settings.set("Video Miniplayer",videoMiniplayerIO)
+settings.set("Video Picture",videoPictureIO)
+settings.set("Video Cinema",videoCinemaIO)
+settings.set("Video TV",videoTVIO)
+settings.set("Video Fullscreen",videoFullscreenIO)
+settings.set("Video Chat",videoChatIO)
 settings.set("Description Download",descDownloadIO)
 settings.set("Description Share",descShareIO)
 settings.set("Description Clip",descClipIO)
@@ -108,22 +128,25 @@ function addTextAnimation(element, color, display){
 }
 
 function checkmarkCheck(){
-    let shortsCheck = true; communityCheck = true; sidebarCheck = true;  descriptionCheck = true; headerCheck = true;
+    let shortsCheck = true; let communityCheck = true; let sidebarCheck = true;  
+    let videoCheck = true; let descriptionCheck = true; let headerCheck = true;
     const shortsElement = document.getElementById("shortsCheckmark");
     const communityElement = document.getElementById("communityCheckmark");
     const sidebarElement = document.getElementById("sidebarCheckmark");
     const headerElement = document.getElementById("headerCheckmark");
+    const videoElement = document.getElementById("videoCheckmark");
     const descriptionElement = document.getElementById("descriptionCheckmark");
     const moviesElement = document.getElementById("moviesCheckmark");
 
     if(shortsElement == null || communityElement == null || sidebarElement == null || 
-        headerElement == null || descriptionElement == null || moviesElement == null){ return }
+        headerElement == null || videoElement == null || descriptionElement == null || moviesElement == null){ return }
 
     for (const [key, value] of settings.entries()) {
         if (value.on == false && value.section == 'Shorts'){ shortsCheck = false; }
         if (value.on == false && value.section == 'Community'){ communityCheck = false; }
         if (value.on == false && value.section == 'Sidebar'){ sidebarCheck = false; }
         if (value.on == false && value.section == 'Header'){ headerCheck = false; }
+        if (value.on == false && value.section == 'Video'){ videoCheck = false; }
         if (value.on == false && value.section == 'Description'){ descriptionCheck = false; }
         if (value.on == false && value.section == 'Movies'){ moviesCheck = false; }
     }
@@ -134,6 +157,7 @@ function checkmarkCheck(){
         addTextAnimation(communityElement, color, communityCheck)
         addTextAnimation(sidebarElement, color, sidebarCheck)
         addTextAnimation(headerElement, color, headerCheck)
+        addTextAnimation(videoElement, color, videoCheck)
         addTextAnimation(descriptionElement, color, descriptionCheck)
         addTextAnimation(moviesElement, color, moviesCheck)
     });

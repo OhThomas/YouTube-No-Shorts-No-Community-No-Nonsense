@@ -1,3 +1,6 @@
 .emptyDSC{
     display: none !important;
 }
+.ytd-menu-renderer{
+    overflow: hidden !important;
+}

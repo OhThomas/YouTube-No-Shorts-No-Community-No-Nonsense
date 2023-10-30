@@ -223,7 +223,7 @@ input:checked + .slider:before, input:checked + .sliderDisabled:before {
 }
 
 /* Submenu - setting width and hiding checkmark */
-input, ul.submenu, ul.submenu2, ul.submenu3, ul.submenu4, ul.submenu5, ul.submenu6 {
+input, ul.submenu, ul.submenu2, ul.submenu3, ul.submenu4, ul.submenu5, ul.submenu6, ul.submenu7 {
     display: none;
     padding-left: 0;
     margin: 0;
@@ -237,7 +237,7 @@ label {
     width: 100%;
 }
 
-.submenu,.submenu2,.submenu3,.submenu4,.submenu5,.submenu6{
+.submenu,.submenu2,.submenu3,.submenu4,.submenu5,.submenu6,.submenu7{
     display: flex;
     float: right;
     width: 100%;
@@ -245,7 +245,8 @@ label {
 
 input#shortsCheck:checked~ul.submenu, input#communityCheck:checked~ul.submenu2, 
 input#sidebarCheck:checked~ul.submenu3, input#headerCheck:checked~ul.submenu4,
-input#moviesCheck:checked~ul.submenu5, input#descriptionCheck:checked~ul.submenu6 {
+input#moviesCheck:checked~ul.submenu5, input#descriptionCheck:checked~ul.submenu6,
+input#videoCheck:checked~ul.submenu7 {
     display: inline-block;
     margin-bottom: 0;
     padding: 0;
@@ -257,7 +258,8 @@ input#communityCheck:checked~.downArrowCommunityContainer, input#communityCheck:
 input#sidebarCheck:checked~.downArrowSidebarContainer, input#sidebarCheck:not(:checked)~.upArrowSidebarContainer,
 input#headerCheck:checked~.downArrowHeaderContainer, input#headerCheck:not(:checked)~.upArrowHeaderContainer,
 input#moviesCheck:checked~.downArrowMoviesContainer, input#moviesCheck:not(:checked)~.upArrowMoviesContainer,
-input#descriptionCheck:checked~.downArrowDescriptionContainer, input#descriptionCheck:not(:checked)~.upArrowDescriptionContainer{
+input#descriptionCheck:checked~.downArrowDescriptionContainer, input#descriptionCheck:not(:checked)~.upArrowDescriptionContainer,
+input#videoCheck:checked~.downArrowVideoContainer, input#videoCheck:not(:checked)~.upArrowVideoContainer{
     display: none !important;
 }
 
@@ -266,7 +268,8 @@ input#communityCheck:not(:checked)~.downArrowCommunityContainer, input#community
 input#sidebarCheck:not(:checked)~.downArrowSidebarContainer, input#sidebarCheck:checked~.upArrowSidebarContainer,
 input#headerCheck:not(:checked)~.downArrowHeaderContainer, input#headerCheck:checked~.upArrowHeaderContainer,
 input#moviesCheck:not(:checked)~.downArrowMoviesContainer, input#moviesCheck:checked~.upArrowMoviesContainer,
-input#descriptionCheck:not(:checked)~.downArrowDescriptionContainer, input#descriptionCheck:checked~.upArrowDescriptionContainer{
+input#descriptionCheck:not(:checked)~.downArrowDescriptionContainer, input#descriptionCheck:checked~.upArrowDescriptionContainer,
+input#videoCheck:not(:checked)~.downArrowVideoContainer, input#videoCheck:checked~.upArrowVideoContainer{
     display: flex;
     float: right;
 }
