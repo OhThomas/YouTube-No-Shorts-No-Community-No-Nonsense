@@ -2,47 +2,49 @@ var window = window ?? self;
 const settings = new Map()
 var node = document.createElement('p');
 const emptyDSC = "emptyDSC"
+const overflowDSC = "overflowDSC"
 
-var powerIO =           { on: true, listener: [node], className: [''], name: 'Power', innerHTML: '' }
-var shortsIO =          { on: true, listener: [node,node], className: ['style-scope ytd-rich-shelf-renderer','style-scope ytd-reel-shelf-renderer'], listenerID: ['content','content'], name: 'Shorts', innerHTML: 'Shorts', observerFunction: [waitForObserverID,waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByInnerHTML,removeByInnerHTML], restoreFunction: [restoreByInnerHTML,restoreByInnerHTML]  }
-var shortsVideosIO =    { on: true, listener: [node], className: ['yt-simple-endpoint inline-block style-scope ytd-thumbnail'], listenerID: ['content'], name: 'Shorts Videos', innerHTML: '/shorts/', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByHREF], restoreFunction: [restoreByHREF] }
-var shortsSidebarIO =   { on: true, listener: [node,node], className: ['yt-simple-endpoint style-scope ytd-mini-guide-entry-renderer','yt-simple-endpoint style-scope ytd-guide-entry-renderer'], listenerID: ['content','sections'], name: 'Shorts Sidebar', innerHTML: '', title: 'Shorts', id: 'endpoint', observerFunction: [waitForObserverID,waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByTitle,removeByTitle], restoreFunction: [restoreByTitle,restoreByTitle] }
-var communityIO =       { on: true, listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Community', innerHTML: 'Latest YouTube posts', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByInnerHTML], restoreFunction: [restoreByInnerHTML] }
-var breakingNewsIO =    { on: true, listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Breaking News', innerHTML: 'Breaking news', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByInnerHTML], restoreFunction: [restoreByInnerHTML]  }
-var communityTrendingIO={ on: true, listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Community Trending', innerHTML: 'Trending', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByInnerHTML], restoreFunction: [restoreByInnerHTML]  }
-var sidebarExtendedIO=  { on: true, listener: [node], className: ['ytd-app'], name: 'Sidebar Extended', drawerID: 'guide', buttonID: 'guide-button', removeAttributes: ['guide-persistent-and-visible','opened','mini-guide-visible'], outerHTML: 'ytd-mini-guide-renderer', id: 'contentContainer', observerFunction: [waitForObserver], waitFunction: waitForSidebarExtended, deleteFunction: [removeSidebarExtended], restoreFunction: [restoreSidebarExtended] }
-var sidebarMiniIO=      { on: true, listener: [node], className: ['ytd-mini-guide-renderer'], listenerID: ['content'], name: 'Sidebar Mini', removeAttributes: ['mini-guide-visible'], checkAttributes: ['guide-persistent-and-visible'], observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeClassDisplay], restoreFunction: [restoreClassDisplay] }
-var headerTopicsIO =    { on: true, listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], listenerID: ['content','content'], name: 'Header Topics', innerHTML: '', id: 'header', observerFunction: [waitForObserverID,waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeHeader,removeHeader], restoreFunction: [restoreHeader,restoreHeader] }
-var headerRelatedIO     ={ on: true, listener: [node], className: ['yt-related-chip-cloud-renderer'], listenerID: ['content'], name: 'Header Related', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
-var headerNotificationIO={ on: true, listener: [node], className: ['ytd-notification-topbar-button-renderer'], listenerID: ['buttons'], name: 'Header Notification', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
-var headerUploadIO      ={ on: true, listener: [node], className: ['ytd-topbar-menu-button-renderer'], listenerID: ['buttons'], name: 'Header Upload', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
-var headerVoiceIO       ={ on: true, listener: [node], className: ['voice-search-button'], listenerID: ['center'], id: 'voice-search-button', name: 'Header Voice', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByID], restoreFunction: [restoreByID] }
-var videoNextIO         ={ on: true, listener: [node], className: ['ytp-next-button ytp-button'], listenerID: ['content'], name: 'Video Next', ariaLabel: 'Next (SHIFT+n)', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
-var videoAutoplayIO     ={ on: true, listener: [node], className: ['ytp-autonav-toggle-button-container'], listenerID: ['content'], name: 'Video Autoplay', ariaLabel: 'Auto-play is', parentCount: 1, observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeClassAriaLabel], restoreFunction: [restoreClassAriaLabel] }
-var videoSubtitlesIO    ={ on: false, listener: [node], className: ['ytp-subtitles-button ytp-button'], listenerID: ['content'], name: 'Video Subtitles', ariaLabel: 'Subtitles', match: true, observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
-var videoSettingsIO     ={ on: false, listener: [node], className: ['ytp-button ytp-settings-button'], listenerID: ['content'], name: 'Video Settings', ariaLabel: 'Settings', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
-var videoMiniplayerIO   ={ on: true, listener: [node], className: ['ytp-miniplayer-button ytp-button'], listenerID: ['content'], name: 'Video Miniplayer', ariaLabel: 'Miniplayer', match: true, observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
-var videoPictureIO      ={ on: true, listener: [node], className: ['ytp-pip-button ytp-button'], listenerID: ['content'], name: 'Video Picture', ariaLabel: 'Picture in Picture', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
-var videoCinemaIO       ={ on: false, listener: [node], className: ['ytp-size-button ytp-button'], listenerID: ['content'], name: 'Video Cinema', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByClass], restoreFunction: [restoreByClass] }
-var videoTVIO           ={ on: true, listener: [node], className: ['ytp-remote-button ytp-button'], listenerID: ['content'], name: 'Video TV', ariaLabel: 'Play on TV', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
-var videoFullscreenIO   ={ on: false, listener: [node], className: ['ytp-fullscreen-button ytp-button'], listenerID: ['content'], name: 'Video Fullscreen', ariaLabel: 'Full screen', match: true, observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByClass], restoreFunction: [restoreByClass] }
-var videoChatIO         ={ on: true, listener: [node], className: ['chat-container'], listenerID: ['content'], name: 'Video Chat', id: 'chat-container', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByID], restoreFunction: [restoreByID] }
-var descDownloadIO      ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Download', parentCount: 3, name: 'Description Download', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
-var descShareIO         ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Share', parentCount: 2, name: 'Description Share', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
-var descClipIO          ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Clip', parentCount: 2, name: 'Description Clip', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
-var descPlaylistIO      ={ on: false, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Save to playlist', parentCount: 2, name: 'Description Playlist', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
-var descPopupIO         ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-button'], ariaLabel: 'More actions', parentCount: 1, listenerID: ['content'], name: 'Description Popup', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
-var descThanksIO        ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], ariaLabel: 'Thanks', parentCount: 2, listenerID: ['content'], name: 'Description Thanks', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
-var descJoinIO          ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--outline yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m'], ariaLabel: 'Join this channel', parentCount: 3, listenerID: ['content'], name: 'Description Join', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
-var descOfferIO         ={ on: true, listener: [node], className: ['offer'], listenerID: ['content'], id: 'offer-module', name: 'Description Offer', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByID], restoreFunction: [restoreByID] }
-var descTryIO           ={ on: true, listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--filled yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m'], ariaLabel: 'Try it for free', parentCount: 3, listenerID: ['content'], name: 'Description Try', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
-var descMerchIO         ={ on: true, listener: [node], className: ['ytd-merch-shelf-renderer'], listenerID: ['content'], name: 'Description Merch', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByName], restoreFunction: [restoreByName]  }
-var descLikeIO          ={ on: false, listener: [node], className: ['ytd-segmented-like-dislike-button-renderer'], listenerID: ['content'], name: 'Description Like', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
-var descMetadataIO      ={ on: true, listener: [node], className: ['ytd-metadata-row-container-renderer'], listenerID: ['content'], id: 'offer-module', name: 'Description Metadata', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByNameAll], restoreFunction: [restoreByNameAll] }
-var descBoxIO           ={ on: false, listener: [node], className: ['box'], listenerID: ['content','content'], id: 'description-inner', name: 'Description Box', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByIDParent], restoreFunction: [restoreByIDParent]}
-var moviesSectionsIO    ={ on: true, listener: [node], className: ['yt-simple-endpoint style-scope ytd-rich-shelf-renderer'], higherClasses: ['ytd-rich-section-renderer'], listenerID: ['center'], name: 'Movies Sections', title: 'Free Primetime movies', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByClassTitle], restoreFunction: [restoreByClassTitle] }
-var moviesBuyIO         ={ on: true, listener: [node], className: ['badge badge-style-type-ypc style-scope ytd-badge-supported-renderer style-scope ytd-badge-supported-renderer'], higherClasses: ['ytd-rich-item-renderer','ytd-grid-movie-renderer','ytd-grid-show-renderer','ytd-grid-video-renderer'], listenerID: ['content'], name: 'Movies Buy', innerHTML: 'Free with ads', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeMoviesBuy], restoreFunction: [restoreMoviesBuy] }
-var moviesFreeIO        ={ on: false, listener: [node,node], className: ['badge badge-style-type-ypc style-scope ytd-badge-supported-renderer style-scope ytd-badge-supported-renderer','badge badge-style-type-simple style-scope ytd-badge-supported-renderer style-scope ytd-badge-supported-renderer'], higherClasses: ['ytd-rich-item-renderer','ytd-grid-movie-renderer','ytd-grid-show-renderer','ytd-grid-video-renderer'], listenerID: ['content','content'], name: 'Movies Free', innerHTML: 'Free with ads', observerFunction: [waitForObserverID,waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeMovies,removeMoviesByRating], restoreFunction: [restoreMovies,restoreMoviesByRating] }
+var powerIO =           { on: [true], listener: [node], className: [''], name: 'Power', innerHTML: '' }
+var shortsIO =          { on: [true], listener: [node,node], className: ['style-scope ytd-rich-shelf-renderer','style-scope ytd-reel-shelf-renderer'], listenerID: ['content','content'], name: 'Shorts', innerHTML: 'Shorts', observerFunction: [waitForObserverID,waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByInnerHTML,removeByInnerHTML], restoreFunction: [restoreByInnerHTML,restoreByInnerHTML]  }
+var shortsVideosIO =    { on: [true], listener: [node], className: ['yt-simple-endpoint inline-block style-scope ytd-thumbnail'], listenerID: ['content'], name: 'Shorts Videos', innerHTML: '/shorts/', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByHREF], restoreFunction: [restoreByHREF] }
+var shortsSidebarIO =   { on: [true], listener: [node,node], className: ['yt-simple-endpoint style-scope ytd-mini-guide-entry-renderer','yt-simple-endpoint style-scope ytd-guide-entry-renderer'], listenerID: ['content','sections'], name: 'Shorts Sidebar', innerHTML: '', title: 'Shorts', id: 'endpoint', observerFunction: [waitForObserverID,waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByTitle,removeByTitle], restoreFunction: [restoreByTitle,restoreByTitle] }
+var communityIO =       { on: [true], listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Community', innerHTML: 'Latest YouTube posts', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByInnerHTML], restoreFunction: [restoreByInnerHTML] }
+var breakingNewsIO =    { on: [true], listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Breaking News', innerHTML: 'Breaking news', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByInnerHTML], restoreFunction: [restoreByInnerHTML]  }
+var communityTrendingIO={ on: [true], listener: [node], className: ['style-scope ytd-rich-shelf-renderer'], listenerID: ['content'], name: 'Community Trending', innerHTML: 'Trending', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByInnerHTML], restoreFunction: [restoreByInnerHTML]  }
+var sidebarExtendedIO=  { on: [true], listener: [node], className: ['ytd-app'], name: 'Sidebar Extended', drawerID: 'guide', buttonID: 'guide-button', removeAttributes: ['guide-persistent-and-visible','opened','mini-guide-visible'], outerHTML: 'ytd-mini-guide-renderer', id: 'contentContainer', observerFunction: [waitForObserver], waitFunction: waitForSidebarExtended, deleteFunction: [removeSidebarExtended], restoreFunction: [restoreSidebarExtended] }
+var sidebarMiniIO=      { on: [true], listener: [node], className: ['ytd-mini-guide-renderer'], listenerID: ['content'], name: 'Sidebar Mini', removeAttributes: ['mini-guide-visible'], checkAttributes: ['guide-persistent-and-visible'], observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeClassDisplay], restoreFunction: [restoreClassDisplay] }
+var headerTopicsIO =    { on: [true], listener: [node,node], className: ['style-scope ytd-rich-grid-renderer','style-scope ytd-search'], listenerID: ['content','content'], name: 'Header Topics', innerHTML: '', id: 'header', observerFunction: [waitForObserverID,waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeHeader,removeHeader], restoreFunction: [restoreHeader,restoreHeader] }
+var headerRelatedIO     ={ on: [true], listener: [node], className: ['yt-related-chip-cloud-renderer'], listenerID: ['content'], name: 'Header Related', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
+var headerNotificationIO={ on: [true], listener: [node], className: ['ytd-notification-topbar-button-renderer'], listenerID: ['buttons'], name: 'Header Notification', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
+var headerUploadIO      ={ on: [true], listener: [node], className: ['ytd-topbar-menu-button-renderer'], listenerID: ['buttons'], name: 'Header Upload', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
+var headerVoiceIO       ={ on: [true], listener: [node], className: ['voice-search-button'], listenerID: ['center'], id: 'voice-search-button', name: 'Header Voice', innerHTML: '', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByID], restoreFunction: [restoreByID] }
+var videoNextIO         ={ on: [true], listener: [node], className: ['ytp-next-button ytp-button'], listenerID: ['content'], name: 'Video Next', ariaLabel: 'Next (SHIFT+n)', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var videoAutoplayIO     ={ on: [true], listener: [node], className: ['ytp-autonav-toggle-button-container'], listenerID: ['content'], name: 'Video Autoplay', ariaLabel: 'Auto-play is', parentCount: 1, observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeClassAriaLabel], restoreFunction: [restoreClassAriaLabel] }
+var videoSubtitlesIO    ={ on: [false], listener: [node], className: ['ytp-subtitles-button ytp-button'], listenerID: ['content'], name: 'Video Subtitles', ariaLabel: 'Subtitles', match: true, observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var videoSettingsIO     ={ on: [false], listener: [node], className: ['ytp-button ytp-settings-button'], listenerID: ['content'], name: 'Video Settings', ariaLabel: 'Settings', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var videoMiniplayerIO   ={ on: [true], listener: [node], className: ['ytp-miniplayer-button ytp-button'], listenerID: ['content'], name: 'Video Miniplayer', ariaLabel: 'Miniplayer', match: true, observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var videoPictureIO      ={ on: [true], listener: [node], className: ['ytp-pip-button ytp-button'], listenerID: ['content'], name: 'Video Picture', ariaLabel: 'Picture in Picture', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var videoCinemaIO       ={ on: [false], listener: [node], className: ['ytp-size-button ytp-button'], listenerID: ['content'], name: 'Video Cinema', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByClass], restoreFunction: [restoreByClass] }
+var videoTVIO           ={ on: [true], listener: [node], className: ['ytp-remote-button ytp-button'], listenerID: ['content'], name: 'Video TV', ariaLabel: 'Play on TV', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var videoFullscreenIO   ={ on: [false], listener: [node], className: ['ytp-fullscreen-button ytp-button'], listenerID: ['content'], name: 'Video Fullscreen', ariaLabel: 'Full screen', match: true, observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByClass], restoreFunction: [restoreByClass] }
+var videoChatIO         ={ on: [true], listener: [node], className: ['chat-container'], listenerID: ['content'], name: 'Video Chat', id: 'chat-container', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByID], restoreFunction: [restoreByID] }
+var descDownloadIO      ={ on: [true], listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Download', parentCount: 3, name: 'Description Download', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var descShareIO         ={ on: [true], listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Share', parentCount: 2, name: 'Description Share', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
+var descClipIO          ={ on: [true], listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Clip', parentCount: 2, name: 'Description Clip', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var descPlaylistIO      ={ on: [false], listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], listenerID: ['content'], ariaLabel: 'Save to playlist', parentCount: 2, name: 'Description Playlist', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var descPopupIO         ={ on: [true], listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-button'], ariaLabel: 'More actions', parentCount: 1, listenerID: ['content'], name: 'Description Popup', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel] }
+var descThanksIO        ={ on: [true], listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading'], ariaLabel: 'Thanks', parentCount: 2, listenerID: ['content'], name: 'Description Thanks', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
+var descJoinIO          ={ on: [true], listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--outline yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m'], ariaLabel: 'Join this channel', parentCount: 3, listenerID: ['content'], name: 'Description Join', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
+var descOfferIO         ={ on: [true], listener: [node], className: ['offer'], listenerID: ['content'], id: 'offer-module', name: 'Description Offer', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByID], restoreFunction: [restoreByID] }
+var descTryIO           ={ on: [true], listener: [node], className: ['yt-spec-button-shape-next yt-spec-button-shape-next--filled yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m'], ariaLabel: 'Try it for free', parentCount: 3, listenerID: ['content'], name: 'Description Try', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByAriaLabel], restoreFunction: [restoreByAriaLabel]  }
+var descMerchIO         ={ on: [true], listener: [node], className: ['ytd-merch-shelf-renderer'], listenerID: ['content'], name: 'Description Merch', observerFunction: [waitForObserverID], waitFunction: waitForMut,  deleteFunction: [removeByName], restoreFunction: [restoreByName]  }
+var descLikeIO          ={ on: [false], listener: [node], className: ['ytd-segmented-like-dislike-button-renderer'], listenerID: ['content'], name: 'Description Like', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByName], restoreFunction: [restoreByName] }
+var descMetadataIO      ={ on: [true], listener: [node], className: ['ytd-metadata-row-container-renderer'], listenerID: ['content'], id: 'offer-module', name: 'Description Metadata', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByNameAll], restoreFunction: [restoreByNameAll] }
+var descBoxIO           ={ on: [false], listener: [node], className: ['box'], listenerID: ['content','content'], id: 'description-inner', name: 'Description Box', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByIDParent], restoreFunction: [restoreByIDParent]}
+var moviesSectionsIO    ={ on: [true], listener: [node], className: ['yt-simple-endpoint style-scope ytd-rich-shelf-renderer'], higherClasses: ['ytd-rich-section-renderer'], listenerID: ['center'], name: 'Movies Sections', title: 'Free Primetime movies', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeByClassTitle], restoreFunction: [restoreByClassTitle] }
+var moviesBuyIO         ={ on: [true], listener: [node], className: ['badge badge-style-type-ypc style-scope ytd-badge-supported-renderer style-scope ytd-badge-supported-renderer'], higherClasses: ['ytd-rich-item-renderer','ytd-grid-movie-renderer','ytd-grid-show-renderer','ytd-grid-video-renderer'], listenerID: ['content'], name: 'Movies Buy', innerHTML: 'Free with ads', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeMoviesBuy], restoreFunction: [restoreMoviesBuy] }
+var moviesFreeIO        ={ on: [false], listener: [node,node], className: ['badge badge-style-type-ypc style-scope ytd-badge-supported-renderer style-scope ytd-badge-supported-renderer','badge badge-style-type-simple style-scope ytd-badge-supported-renderer style-scope ytd-badge-supported-renderer'], higherClasses: ['ytd-rich-item-renderer','ytd-grid-movie-renderer','ytd-grid-show-renderer','ytd-grid-video-renderer'], listenerID: ['content','content'], name: 'Movies Free', innerHTML: 'Free with ads', observerFunction: [waitForObserverID,waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeMovies,removeMoviesByRating], restoreFunction: [restoreMovies,restoreMoviesByRating] }
+var autoMenuOverflowIO  ={ on: [true], listener: [node], className: ['ytd-menu-renderer'], listenerID: ['content'], name: 'Menu Overflow', observerFunction: [waitForObserverID], waitFunction: waitForMut, deleteFunction: [removeOverflowByName], restoreFunction: [restoreByName] }
 
 settings.set("powerIO",powerIO)
 settings.set("shortsIO",shortsIO)
@@ -84,6 +86,7 @@ settings.set("descBoxIO",descBoxIO)
 settings.set("moviesSectionsIO",moviesSectionsIO)
 settings.set("moviesBuyIO",moviesBuyIO)
 settings.set("moviesFreeIO",moviesFreeIO)
+settings.set("autoMenuOverflowIO",autoMenuOverflowIO)
 
 async function getStorage(key){
     var storage = await chrome.storage.local.get(key).then((result) => { return result[key] });
@@ -93,7 +96,7 @@ async function getStorage(key){
 async function setStorage(key, value){ await chrome.storage.local.set({[key]: value}) }
 
 async function awaitStorage(IO){
-    IO.on = (await getStorage(IO.name) != null) ? await getStorage(IO.name) : IO.on
+    IO.on[0] = (await getStorage(IO.name) != null) ? await getStorage(IO.name) : IO.on[0]
 }
 
 // Finding proper parent to remove
@@ -246,6 +249,18 @@ function removeByNameAll(IO, className){
     return ret;
 }
 
+function removeOverflowByName(IO, className){
+    let element = document.getElementsByTagName(className)[0]
+    if(element){
+        let eleStyle = window.getComputedStyle(element)
+        if(eleStyle && element.classList && !element.classList.contains(overflowDSC)){
+            console.log("Removing "+ IO.name + " at " + className)
+            element.classList.add(overflowDSC)
+            return true;
+        }
+    }
+}
+
 function removeByID(IO, className){
     let element = document.getElementById(IO.id)
     if(element && !element.classList.contains(emptyDSC)){
@@ -293,7 +308,7 @@ function removeSidebarExtended(IO, element){
     // Removing guide-persistent-and-visible from ytd-app
     attributeRemoved = (removeAttributeIO(IO,0,element)) 
     // Removing mini-guide-visible from ytd-app
-    if(settings.get("sidebarMiniIO").on) { removeAttributeIO(IO,2,element) }
+    if(settings.get("sidebarMiniIO").on[0]) { removeAttributeIO(IO,2,element) }
     if(attributeRemoved){ console.log("Removing " + IO.name) }
     return attributeRemoved;
 }
@@ -505,7 +520,7 @@ function restoreSidebarExtended(IO,i){
         document.getElementById(IO.buttonID).classList.remove(emptyDSC)
     }
     // Adding mini-visible to ytd-app if not on
-    if(settings.get("sidebarMiniIO").on == false) { document.getElementsByTagName(IO.className[0])[0].setAttribute(IO.removeAttributes[2],"") }//removeAttributeIO(IO,2,) }
+    if(settings.get("sidebarMiniIO").on[0] == false) { document.getElementsByTagName(IO.className[0])[0].setAttribute(IO.removeAttributes[2],"") }//removeAttributeIO(IO,2,) }
 }
 
 function restoreByClass(IO,i){
@@ -551,7 +566,7 @@ function preDisconnect(listener){
 }
 
 function checkToDisconnect(listener,on){
-    if(settings.get("powerIO").on == false || on == false){
+    if(settings.get("powerIO").on[0] == false || on == false){
         listener.disconnect();
         return true;
     }
@@ -563,7 +578,7 @@ function waitForMut(IO){
         IO.deleteFunction[i](IO,IO.className[i])
         preDisconnect(IO.listener[i])
         IO.listener[i] = new MutationObserver(function() {
-            if(checkToDisconnect(IO.listener[i], IO.on)) { return; }
+            if(checkToDisconnect(IO.listener[i], IO.on[0])) { return; }
             if(IO.deleteFunction[i](IO,IO.className[i])) { IO.listener[i].disconnect() }
         });
         try{
@@ -581,7 +596,7 @@ function waitForSidebarExtended(IO){
     }
     preDisconnect(IO.listener[0])
     IO.listener[0] = new MutationObserver(() => {
-        if (checkToDisconnect(IO.listener[0],IO.on)){ return; }
+        if (checkToDisconnect(IO.listener[0],IO.on[0])){ return; }
         if( document.getElementsByTagName(IO.className[0])[0] != null){
             IO.deleteFunction[0](IO, document.getElementsByTagName(IO.className[0])[0])
         }
@@ -640,7 +655,7 @@ async function waitForDocument(){
 function deleteIO(){
     for (const [key, value] of settings.entries()) {
         if(value.name != "Power"){
-            if(value.on == true){ value.waitFunction(value) }
+            if(value.on[0] == true){ value.waitFunction(value) }
         }
     }
 }
@@ -648,7 +663,7 @@ function deleteIO(){
 function restoreIO(){
     for (const [key, value] of settings.entries()) {
         if(value.name != "Power"){
-            if(value.on == true){ 
+            if(value.on[0] == true){ 
                 for(let i = 0; i < value.restoreFunction.length; i++){ value.restoreFunction[i](value,i) } 
             }
         }
@@ -657,7 +672,7 @@ function restoreIO(){
 
 async function resetValues(){
     for (const [key, value] of settings.entries()) {
-        value.on = (await getStorage(value.name) != null) ? await getStorage(value.name) : value.on
+        value.on[0] = (await getStorage(value.name) != null) ? await getStorage(value.name) : value.on[0]
     }
 }
 
@@ -665,9 +680,10 @@ async function startup(){
     for (const [key, value] of settings.entries()) {
         await awaitStorage(value)   // loading settings
     }
-    if(settings.get("powerIO").on == true){
+    if(settings.get("powerIO").on[0] == true){
         deleteIO()                  // implementing
     }
+
 }
 
 chrome.storage.onChanged.addListener(async (changes, namespace) => {
@@ -675,16 +691,16 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
         await resetValues();
         if(newValue == true){
             if(key == "Power"){ deleteIO() }
-            else if(settings.get("powerIO").on == true){
+            else if(settings.get("powerIO").on[0] == true){
                 for (const [key2, value] of settings.entries()) {
-                    value.on = newValue
+                    value.on[0] = newValue
                     if(value.name == key){ value.waitFunction(value) }
                 }
             }
         }
         else{
             if(key == "Power"){ restoreIO() }
-            else if(settings.get("powerIO").on == true){
+            else if(settings.get("powerIO").on[0] == true){
                 for (const [key2, value] of settings.entries()) {
                     if(value.name == key){ 
                         for(let i = 0; i < value.restoreFunction.length; i++){ value.restoreFunction[i](value,i) } 
