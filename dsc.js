@@ -251,13 +251,10 @@ function removeByNameAll(IO, className){
 
 function removeOverflowByName(IO, className){
     let element = document.getElementsByTagName(className)[0]
-    if(element){
-        let eleStyle = window.getComputedStyle(element)
-        if(eleStyle && element.classList && !element.classList.contains(overflowDSC)){
-            console.log("Removing "+ IO.name + " at " + className)
-            element.classList.add(overflowDSC)
-            return true;
-        }
+    if(element && !element.classList.contains(overflowDSC)){
+        console.log("Removing "+ IO.name + " at " + className)
+        element.classList.add(overflowDSC)
+        return true;
     }
 }
 
